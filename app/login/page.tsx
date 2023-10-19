@@ -1,7 +1,13 @@
-import Link from 'next/link'
-import Messages from './messages'
+'use client'
+
+import Link from 'next/link';
+import Messages from './messages';
+import { useSearchParams } from 'next/navigation';
 
 export default function Login() {
+  const searchParams = useSearchParams();
+  const signUpType = searchParams.get('type') ?? '';
+
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
       <Link
@@ -49,15 +55,18 @@ export default function Login() {
           placeholder="••••••••"
           required
         />
-        <button className="bg-green-700 rounded px-4 py-2 text-white mb-2">
-          Sign In
-        </button>
+        { !signUpType && 
+          <button className="bg-green-700 rounded px-4 py-2 text-white mb-2">
+            Sign In
+          </button>
+        }
         <button
           formAction="/auth/sign-up"
-          className="border border-gray-700 rounded px-4 py-2 text-black mb-2"
+          className="border border-gray-700 rounded px-4 py-2 text-white mb-2"
         >
           Sign Up
         </button>
+        <input hidden value={signUpType} name="sign-up-type" />
         <Messages />
       </form>
     </div>

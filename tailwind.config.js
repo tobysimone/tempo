@@ -9,6 +9,8 @@ module.exports = {
         btn: {
           background: 'hsl(var(--btn-background))',
           'background-hover': 'hsl(var(--btn-background-hover))',
+          'background-action': 'hsl(var(--btn-background-action))',
+          'background-action-hover': 'hsl(var(--btn-background-action-hover))'
         },
       },
     },
