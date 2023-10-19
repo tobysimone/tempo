@@ -26,13 +26,13 @@ export default function SignUp() {
                 Back
             </Link>
             
-            <Link href="/login?type=fan" className="py-2 px-4 mb-2 rounded-md no-underline text-foreground bg-btn-background-action hover:bg-btn-background-action-hover flex items-center justify-center">
+            <Link href="/signup/fan" className="py-2 px-4 mb-2 rounded-md no-underline text-foreground bg-btn-background-action hover:bg-btn-background-action-hover flex items-center justify-center">
                 Sign up as a fan
             </Link>
-            <Link href="/login?type=artist" className="py-2 px-4 mb-2 rounded-md no-underline text-foreground bg-btn-background-action hover:bg-btn-background-action-hover flex items-center justify-center">
+            <Link href="/signup/artist" className="py-2 px-4 mb-2 rounded-md no-underline text-foreground bg-btn-background-action hover:bg-btn-background-action-hover flex items-center justify-center">
                 Sign up as an artist
             </Link>
-            <Link href="/login?type=label" className="py-2 px-4 mb-2 rounded-md no-underline text-foreground bg-btn-background-action hover:bg-btn-background-action-hover flex items-center justify-center">
+            <Link href="/signup/label" className="py-2 px-4 mb-2 rounded-md no-underline text-foreground bg-btn-background-action hover:bg-btn-background-action-hover flex items-center justify-center">
                 Sign up as a label
             </Link>
         </div>
