@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import SignUpMessage from '../_components/sign-up-message';
 
-export default function FanSignUp() {
+export default function ArtistSignUp() {
     return (
         <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
             <Link
@@ -27,7 +27,7 @@ export default function FanSignUp() {
 
             <form
                 className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
-                action="/auth/sign-up/fan"
+                action="/auth/sign-up/artist"
                 method="post"
             >
                 <label className="text-md" htmlFor="email">
@@ -40,12 +40,12 @@ export default function FanSignUp() {
                     required
                 />
                 <label className="text-md" htmlFor="username">
-                    Username
+                    Artist/Band Name
                 </label>
                 <input
                     className="rounded-md px-4 py-2 bg-inherit border mb-6"
-                    name="username"
-                    placeholder="Username"
+                    name="artist-name"
+                    placeholder="Artist/Band"
                     required
                 />
                 <label className="text-md" htmlFor="password">
