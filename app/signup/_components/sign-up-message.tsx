@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation'
 
-export default function Messages() {
+export default function SignUpMessage() {
   const searchParams = useSearchParams()
   const error = searchParams.get('error')
   const message = searchParams.get('message')
