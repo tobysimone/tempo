@@ -1,4 +1,4 @@
-import { SignUpMessage } from "@/app/_constants/auth-error-message";
+import { SignUpMessage } from "@/app/_constants/sign-up-message";
 import { TableConstants } from "@/app/_constants/table-constants";
 import { SupabaseClient, createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
@@ -14,7 +14,7 @@ export async function POST(request: Request) {
 
     const { error: createUserError } = await createUser(supabase, email, password, `${requestUrl.origin}/auth/callback`);
     if (createUserError) {
-        console.log(`Error while completing artist sign up: ${createUserError}`);
+        console.log(`Error while creating user account for artist sign up: ${createUserError}`);
         return redirectToSignUpWithMessage(requestUrl.origin, 301, true, SignUpMessage.ERROR_WHILE_CREATING_ARTIST_ACCOUNT);
     }
 
