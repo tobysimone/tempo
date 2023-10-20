@@ -12,15 +12,21 @@ export async function POST(request: Request) {
     const password = String(formData.get('password'));
     const supabase = createRouteHandlerClient({ cookies });
 
-    const { error: createUserError } = await createUser(supabase, email, password, `${requestUrl.origin}/auth/callback`);
+    const { data: { user }, error: createUserError } = await createUser(supabase, email, password, `${requestUrl.origin}/auth/callback`);
     if (createUserError) {
-        console.log(`Error while creating user account for artist sign up: ${createUserError}`);
+        console.log(`Error while creating user account for artist sign up: ${JSON.stringify(createUserError)}`);
         return redirectToSignUpWithMessage(requestUrl.origin, 301, true, SignUpMessage.ERROR_WHILE_CREATING_ARTIST_ACCOUNT);
     }
 
-    const { error: createArtistError } = await createArtist(supabase, artistName);
+    const userId = user?.id;
+    if(!userId) {
+        console.log(`Error while creating user account for artist sign up: userId is null`);
+        return redirectToSignUpWithMessage(requestUrl.origin, 301, true, SignUpMessage.ERROR_WHILE_CREATING_ARTIST_ACCOUNT);
+    }
+
+    const { error: createArtistError } = await createArtist(supabase, userId, artistName);
     if(createArtistError) {
-        console.log(`Error while completing artist sign up: ${createArtistError}`);
+        console.log(`Error while completing artist sign up: ${JSON.stringify(createArtistError)}`);
         return redirectToSignUpWithMessage(requestUrl.origin, 301, true, SignUpMessage.ERROR_WHILE_CREATING_ARTIST_ACCOUNT);
     }
 
@@ -37,9 +43,9 @@ function createUser(supabase: SupabaseClient, email: string, password: string, e
     });
 }
 
-function createArtist(supabase: SupabaseClient, name: string) {
+function createArtist(supabase: SupabaseClient, userId: string, name: string) {
     return supabase.from(TableConstants.ARTIST)
-        .insert({ name: name });
+        .insert({ user_id: userId, name: name });
 }
 
 function redirectToSignUpWithMessage(origin: string, status: number, error: boolean, message: string): NextResponse {

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import SignUpMessage from '../_components/sign-up-message';
+import SignUpMessage from '../_components/SignUpMessage';
 
 export default function FanSignUp() {
     return (
@@ -58,7 +58,7 @@ export default function FanSignUp() {
                     placeholder="••••••••"
                     required
                 />
-                <button className="border border-gray-700 rounded px-4 py-2 text-white mb-2">
+                <button className="border border-gray-700 rounded px-4 py-2 mb-2">
                     Sign Up
                 </button>
                 <SignUpMessage />

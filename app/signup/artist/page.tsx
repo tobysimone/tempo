@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import SignUpMessage from '../_components/sign-up-message';
+import SignUpMessage from '../_components/SignUpMessage';
 
 export default function ArtistSignUp() {
     return (

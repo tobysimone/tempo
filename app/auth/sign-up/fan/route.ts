@@ -12,15 +12,21 @@ export async function POST(request: Request) {
     const password = String(formData.get('password'));
     const supabase = createRouteHandlerClient({ cookies });
 
-    const { error: createUserError } = await createUser(supabase, email, password, `${requestUrl.origin}/auth/callback`);
+    const { data: { user }, error: createUserError } = await createUser(supabase, email, password, `${requestUrl.origin}/auth/callback`);
     if (createUserError) {
-        console.log(`Error while creating user account for fan sign up: ${createUserError}`);
+        console.log(`Error while creating user account for fan sign up: ${JSON.stringify(createUserError)}`);
         return redirectToSignUpWithMessage(requestUrl.origin, 301, true, SignUpMessage.ERROR_WHILE_CREATING_ARTIST_ACCOUNT);
     }
 
-    const { error: createFanError } = await createFan(supabase, username);
+    const userId = user?.id;
+    if(!userId) {
+      console.log(`Error while creating user account for fan sign up: userId is null`);
+      return redirectToSignUpWithMessage(requestUrl.origin, 301, true, SignUpMessage.ERROR_WHILE_CREATING_ARTIST_ACCOUNT);
+    }
+
+    const { error: createFanError } = await createFan(supabase, userId, username);
     if(createFanError) {
-      console.log(`Error while completing fan sign up: ${createFanError}`);
+      console.log(`Error while completing fan sign up: ${JSON.stringify(createFanError)}`);
       return redirectToSignUpWithMessage(requestUrl.origin, 301, true, SignUpMessage.ERROR_WHILE_CREATING_ARTIST_ACCOUNT);
     }
     
@@ -37,9 +43,9 @@ function createUser(supabase: SupabaseClient, email: string, password: string, e
   });
 }
 
-function createFan(supabase: SupabaseClient, username: string) {
+function createFan(supabase: SupabaseClient, userId: string, username: string) {
   return supabase.from(TableConstants.FAN)
-    .insert({ username: username });
+    .insert({ user_id: userId, username: username });
 }
 
 function redirectToSignUpWithMessage(origin: string, status: number, error: boolean, message: string): NextResponse {

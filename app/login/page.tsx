@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link';
-import Messages from './messages';
+import LoginMessage from './LoginMessage';
 import { useSearchParams } from 'next/navigation';
 
 export default function Login() {
@@ -67,7 +67,7 @@ export default function Login() {
           Sign Up
         </button>
         <input hidden value={signUpType} name="sign-up-type" />
-        <Messages />
+        <LoginMessage />
       </form>
     </div>
   )
