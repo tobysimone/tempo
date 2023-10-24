@@ -1,33 +1,40 @@
 'use client'
 
+import { UserType } from "@/app/_shared/constants/user-constants";
 import { useUser } from "@/app/_shared/hooks/useUser";
+import { useUserType } from "@/app/_shared/hooks/useUserType";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export const dynamic = 'force-dynamic';
 
 interface UserNavigationProps {
     email: string | undefined;
     displayName: string | null;
+    userType: UserType;
 }
 
 export default function UserNavbar() {
     const supabase = createClientComponentClient();
     const userInfo = useUser(supabase);
-
-    console.log('rendering');
+    const userType = useUserType(userInfo?.user);
 
     return (
         <div className="fixed z-20 w-full top-0 left-0">
             <Navbar rounded>
-                <Navbar.Brand href="https://flowbite-react.com">
+                <Navbar.Brand href="/">
                     <img src="https://i.pinimg.com/736x/ed/18/39/ed18392a24e4a718d5bf11663d5e2b07.jpg" className="mr-3 h-9 sm:h-9 rounded-lg" alt="Tempo Logo" />
                     <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Tempo</span>
                 </Navbar.Brand>
                 { userInfo ? (
-                    <UserNavigation email={userInfo?.user?.email} displayName={userInfo?.displayName} />
+                    <UserNavigation
+                        email={userInfo?.user?.email}
+                        displayName={userInfo?.displayName}
+                        userType={userType}
+                    />
                 ) : (
                     <div>
                         <NoUserNavigation />
@@ -38,9 +45,25 @@ export default function UserNavbar() {
     )
 }
 
-function UserNavigation({ email, displayName }: UserNavigationProps) {
+function UserNavigation({ email, displayName, userType }: UserNavigationProps) {
+    const [dashboardRoute, setDashboardRoute] = useState<string>('/');
     const supabase = createClientComponentClient();
     const router = useRouter();
+
+    useEffect(() => {
+        console.log(userType);
+        switch(userType) {
+            case UserType.ARTIST:
+                setDashboardRoute('/dashboard/artist');
+                break;
+            case UserType.FAN:
+                setDashboardRoute('/dashboard/fan');
+                break;
+            default:
+                setDashboardRoute('/');
+                break;
+        }
+    }, [userType]);
 
     return (
         <div className="flex md:order-2 mr-3">
@@ -54,9 +77,10 @@ function UserNavigation({ email, displayName }: UserNavigationProps) {
                     <span className="block text-sm">{ displayName }</span>
                     <span className="block truncate text-sm font-medium">{ email }</span>
                 </Dropdown.Header>
-                <Dropdown.Item>Dashboard</Dropdown.Item>
+                <Dropdown.Item>
+                    <Link href={dashboardRoute}>Dashboard</Link>
+                </Dropdown.Item>
                 <Dropdown.Item>Settings</Dropdown.Item>
-                <Dropdown.Item>Earnings</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={async () => {
                     await supabase.auth.signOut();
@@ -65,7 +89,6 @@ function UserNavigation({ email, displayName }: UserNavigationProps) {
                     Sign Out
                 </Dropdown.Item>
             </Dropdown>
-            <Navbar.Toggle />
         </div>
     )
 }
