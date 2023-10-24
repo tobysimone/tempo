@@ -1,3 +1,4 @@
+import UserNavbar from '@/components/navbar/UserNavbar';
 import './globals.css'
 
 export const metadata = {
@@ -5,7 +6,7 @@ export const metadata = {
   description: 'A music community',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
@@ -14,7 +15,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <main className="min-h-screen bg-background flex flex-col items-center">
-          {children}
+          <UserNavbar />
+          <div className="flex flex-col items-center w-full" style={{ marginTop: 60 }}>
+            {children}
+          </div>
         </main>
       </body>
     </html>

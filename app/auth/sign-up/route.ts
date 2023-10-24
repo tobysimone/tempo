@@ -12,8 +12,6 @@ export async function POST(request: Request) {
   const signUpType = String(formData.get('sign-up-type'));
   const supabase = createRouteHandlerClient({ cookies });
 
-  console.log(signUpType);
-
   const { error } = await supabase.auth.signUp({
     email,
     password,
