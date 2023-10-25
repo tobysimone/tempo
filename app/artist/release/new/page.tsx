@@ -1,7 +1,7 @@
 'use client'
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Button, Card, Datepicker, Modal, Toast } from "flowbite-react";
+import { Button, Card, Datepicker, Modal, Textarea, Toast } from "flowbite-react";
 import { ChangeEvent, useRef, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { HiExclamation } from 'react-icons/hi';
@@ -9,9 +9,12 @@ import Image from 'next/image'
 
 import 'react-image-crop/dist/ReactCrop.css';
 import ReactCrop, { Crop, PercentCrop, PixelCrop } from "react-image-crop";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function NewRelease() {
     const supabase = createClientComponentClient();
+    const router = useRouter();
 
     const [artworkFilename, setArtworkFilename] = useState<string>();
     const [artwork, setArtwork] = useState<string>();
@@ -115,13 +118,22 @@ export default function NewRelease() {
                 <h1 className="text-3xl font-bold text-black dark:text-white">Create New Release</h1>
                 <div className="mt-5 flex flex-col w-full justify-center gap-2">
                     <label htmlFor="title" className="text-lg text-black dark:text-white">Release Title</label>
-                    <input type="text" className="rounded-md px-4 py-2 bg-inherit border mb-6 text-black dark:text-white" required />
+                    <input type="text" className="rounded-md px-4 bg-inherit border mb-6 text-black dark:text-white" />
 
                     <label htmlFor="release-date" className="text-lg text-black dark:text-white">Release Date</label>
-                    <Datepicker aria-label='custom-datepicker' />
+                    <Datepicker aria-label='custom-datepicker' className="mb-6"/>
 
-                    <label htmlFor="artwork" className="mt-5 text-lg text-black dark:text-white">Artwork</label>
-                    <input type="file" accept="image/*" name="artwork" className="text-black dark:text-white rounded-md" onChange={handleFileSelected} />
+                    <label htmlFor="artwork" className="text-lg text-black dark:text-white">Artwork</label>
+                    <input type="file" accept="image/*" name="artwork" className="text-black dark:text-white rounded-md mb-6" onChange={handleFileSelected} />
+
+                    <label htmlFor="release-description" className="text-lg text-black dark:text-white">Release Description</label>
+                    <Textarea
+                        name="release-description"
+                        placeholder=""
+                        required
+                        rows={4}
+                        className="bg-inherit"
+                    />
 
                     {artwork && (
                         <img src={artwork} style={{ width: '100%' }} />
@@ -135,6 +147,9 @@ export default function NewRelease() {
                         <option value="ep">LP</option>
                     </select>
 
+                    <label htmlFor="tags" className="mt-5 text-lg text-black dark:text-white">Tags</label>
+                    <input type="text" className="text-black dark:text-white rounded bg-inherit border" />
+
                     {showArtworkError && (
                         <Toast className="mt-5 absolute bottom-10 left-10">
                             <div className="mr-3 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-500 dark:bg-orange-700 dark:text-orange-200">
@@ -147,11 +162,14 @@ export default function NewRelease() {
                         </Toast>
                     )}
 
-                    <Button className="mt-5" onClick={onCreateReleaseClicked}>
-                        <p className="text-md font-normal text-white">
-                            Create release
-                        </p>
-                    </Button>
+                    <div className="flex flex-row flex-1 items-center ml-auto mt-5">
+                        <Link href="#" className="mr-5 animated-link">Cancel</Link>
+                        <Button onClick={onCreateReleaseClicked}>
+                            <p className="text-md font-normal text-white">
+                                Next
+                            </p>
+                        </Button>
+                    </div>
                 </div>
                 <Modal show={showCropModal} onClose={onCropCancel} size={'sm'}>
                     <Modal.Header>Crop Artwork</Modal.Header>
