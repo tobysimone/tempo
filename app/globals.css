@@ -14,7 +14,7 @@
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --background: 200 50% 3%;
+      --background: 210, 34%, 13%;
       --btn-background: 200 10% 9%;
       --btn-background-hover: 200 10% 12%;
       --btn-background-action: 142 72% 29%;
@@ -43,4 +43,9 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+[aria-label='custom-datepicker'] {
+  background-color: inherit !important;
+  border-color: #6B7280 !important;
 }
