@@ -7,6 +7,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        pink: '#f472b6',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         btn: {

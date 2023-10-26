@@ -51,7 +51,6 @@ function UserNavigation({ email, displayName, userType }: UserNavigationProps) {
     const router = useRouter();
 
     useEffect(() => {
-        console.log(userType);
         switch(userType) {
             case UserType.ARTIST:
                 setDashboardRoute('/dashboard/artist');
