@@ -1,5 +1,5 @@
 #notification {
-    position: absolute;
+    position: fixed;
     left: 40px;
     animation: slide 0.25s forwards;
 }
