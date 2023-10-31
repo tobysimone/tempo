@@ -4,21 +4,12 @@ import './styles.css';
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Card } from "flowbite-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import NewReleaseDetails from './new-release-details';
-import useNotification from '@/app/_shared/hooks/useNotification';
 
 export default function NewRelease() {
     const supabase = createClientComponentClient();
-
-    const { addNotification } = useNotification();
-
-    useEffect(() => {
-        addNotification('Hello world 1', 'error');
-        addNotification('Hello world 2', 'error');
-        addNotification('Hello world 3', 'error');
-    }, []);
 
     const [releaseTitle, setReleaseTitle] = useState('');
     const [releaseDate, setReleaseDate] = useState<Date | undefined>();

@@ -6,7 +6,7 @@ import Cropper from "@/components/cropper/Cropper";
 import { Button, Datepicker, Textarea, Toast } from "flowbite-react";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
-import { HiExclamation } from 'react-icons/hi';
+import toast from 'react-hot-toast';
 
 export interface NewReleaseDetailsProps {
     releaseTitle: string;
@@ -26,7 +26,6 @@ export interface NewReleaseDetailsProps {
 }
 
 export default function NewReleaseDetails(props: NewReleaseDetailsProps) {
-    const [showArtworkError, setShowArtworkError] = useState(false);
     const [rawArtwork, setRawArtwork] = useState<string>();
     const [showCropper, setShowCropper] = useState(false);
 
@@ -51,7 +50,7 @@ export default function NewReleaseDetails(props: NewReleaseDetailsProps) {
         const file = e.target?.files?.[0];
         if (!file) {
             console.error(`Artwork file is null`);
-            setShowArtworkError(true);
+            toast.error('Could not upload artwork, please try again');
             return;
         }
         setArtworkFilename(file.name);
@@ -122,18 +121,6 @@ export default function NewReleaseDetails(props: NewReleaseDetailsProps) {
                 onChange={(e) => setReleaseTags(e.target.value)}
             />
 
-            {showArtworkError && (
-                <Toast className="mt-5 absolute bottom-10 left-10">
-                    <div className="mr-3 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-100 text-orange-500 dark:bg-orange-700 dark:text-orange-200">
-                        <HiExclamation className="h-5 w-5" />
-                    </div>
-                    <div className="text-sm font-normal text-muted dark:text-muted">
-                        Could not upload artwork, please try again
-                    </div>
-                    <Toast.Toggle />
-                </Toast>
-            )}
-
             <div className="flex flex-row flex-1 items-center ml-auto mt-5">
                 <Link href="#" className="mr-5 animated-link text-black dark:text-white">Cancel</Link>
                 <Button onClick={onNextClicked} disabled={!nextEnabled}>
@@ -160,7 +147,7 @@ export default function NewReleaseDetails(props: NewReleaseDetailsProps) {
                         setRawArtwork('');
                         setEditedArtwork(null);
                         setShowCropper(false);
-                        setShowArtworkError(true);
+                        toast.error('Could not upload artwork, please try again');
                         console.error(error);
                     }}
                 />
