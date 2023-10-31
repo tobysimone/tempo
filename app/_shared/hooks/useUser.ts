@@ -4,6 +4,7 @@ import { UserConstants } from "../constants/user-constants";
 import { TableConstants } from "../constants/table-constants";
 
 export interface UserInfo {
+    authenticated: boolean;
     user: User | undefined;
     displayName: string | null;
 }
@@ -64,6 +65,7 @@ export function useUser(supabase: SupabaseClient): UserInfo | null {
 
     const getDisplayName = async (user: User) => {
         const userType = getUserType(user);
+        console.log(userType);
         switch(userType) {
             case UserConstants.USER_TYPE_FAN:
                 setDisplayName(await getFanDisplayName(user));
@@ -92,6 +94,7 @@ export function useUser(supabase: SupabaseClient): UserInfo | null {
     }, [user, displayName]);
 
     return {
+        authenticated: user != null && user != undefined,
         user: user,
         displayName: displayName
     };
