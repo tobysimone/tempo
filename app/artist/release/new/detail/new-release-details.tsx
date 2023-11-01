@@ -1,6 +1,6 @@
 'use client'
 
-import './styles.css';
+import '../styles.css';
 
 import Cropper from "@/components/cropper/Cropper";
 import { Button, Datepicker, Textarea, Toast } from "flowbite-react";
@@ -61,7 +61,8 @@ export default function NewReleaseDetails(props: NewReleaseDetailsProps) {
     return (
         <>
             <label htmlFor="title" className="text-lg text-black dark:text-white">Release Title</label>
-            <input 
+            <input
+                name="title"
                 type="text" 
                 className="rounded-md px-4 bg-inherit border mb-6 text-black dark:text-white" 
                 value={releaseTitle}
@@ -80,7 +81,7 @@ export default function NewReleaseDetails(props: NewReleaseDetailsProps) {
             <input 
                 type="file" 
                 accept="image/*" 
-                name="artwork" 
+                name="artwork"
                 className="text-black dark:text-white rounded-md mb-6" 
                 onChange={handleArtworkFileSelected} 
             />

@@ -6,11 +6,15 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Card } from "flowbite-react";
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import NewReleaseDetails from './new-release-details';
+import NewReleaseDetails from './detail/new-release-details';
+import NewReleaseTracks from './tracks/new-release-tracks';
+import { NewReleaseTrack } from './tracks/model/new-release-track';
+import NewReleaseTrackCard from './tracks/components/new-release-track-card';
 
 export default function NewRelease() {
     const supabase = createClientComponentClient();
 
+    //release detail
     const [releaseTitle, setReleaseTitle] = useState('');
     const [releaseDate, setReleaseDate] = useState<Date | undefined>();
     const [editedArtwork, setEditedArtwork] = useState<string | null | undefined>();
@@ -18,7 +22,12 @@ export default function NewRelease() {
     const [releaseType, setReleaseType] = useState('');
     const [releaseTags, setReleaseTags] = useState('');
     const [artworkFilename, setArtworkFilename] = useState('');
-    const [currentFlowPage, setCurrentFlowPage] = useState<'detail' | 'track'>('detail');
+    
+    //release tracks
+    const [tracks, setTracks] = useState<NewReleaseTrack[]>([]);
+
+    //general release
+    const [currentFlowPage, setCurrentFlowPage] = useState<'detail' | 'track'>('track');
 
     const uploadArtwork = async () => {
         if (!editedArtwork || !artworkFilename) {
@@ -42,6 +51,35 @@ export default function NewRelease() {
         const filepath = data.path;
     }
 
+    const canMoveToTracksPage = () => {
+        return (!!releaseTitle && 
+            !!releaseDate && 
+            !!editedArtwork && 
+            !!releaseDescription && 
+            !!releaseType &&
+            !!artworkFilename
+        )
+    }
+
+    const addTrack = () => {
+        const _tracks = [...tracks];
+        _tracks.push({ id: uuidv4() });
+        setTracks(_tracks);
+    }
+
+    const removeTrack = (id: string) => {
+        let _tracks = [...tracks];
+        _tracks = _tracks.filter(track => track.id != id);
+        setTracks(_tracks);
+    }
+
+    const setTrackFile = (id: string, file: File) => {
+        let _tracks = [...tracks];
+        const index = _tracks.findIndex(t => t.id == id);
+        _tracks[index].file = file;
+        setTracks(_tracks);
+    }
+
     const getFlowPage = () => {
         switch(currentFlowPage) {
             case 'detail':
@@ -59,13 +97,7 @@ export default function NewRelease() {
                         releaseTags={releaseTags}
                         setReleaseTags={setReleaseTags}
                         setArtworkFilename={setArtworkFilename}
-                        nextEnabled={!!releaseTitle && 
-                            !!releaseDate && 
-                            !!editedArtwork && 
-                            !!releaseDescription && 
-                            !!releaseType &&
-                            !!artworkFilename
-                        }
+                        nextEnabled={canMoveToTracksPage()}
                         onNextClicked={() => {
                             setCurrentFlowPage('track');
                         }}
@@ -73,7 +105,11 @@ export default function NewRelease() {
                 )
             case 'track':
                 return (
-                    <>Add tracks</>
+                    <NewReleaseTracks
+                        tracks={tracks}
+                        addTrack={addTrack}
+                        onBackClicked={() => setCurrentFlowPage('detail')}
+                    />
                 )
         }
     }
@@ -86,6 +122,14 @@ export default function NewRelease() {
                     {getFlowPage()}
                 </div>
             </Card>
+            {currentFlowPage == 'track' && tracks.map(track => (
+                <NewReleaseTrackCard
+                    key={uuidv4()}
+                    track={track}
+                    removeTrack={removeTrack}
+                    setTrackFile={setTrackFile}
+                />
+            ))}
         </>
     )
 }
