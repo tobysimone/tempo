@@ -141,7 +141,7 @@ export default function NewRelease() {
 
     return (
         <>
-            <Card className="mt-5 w-full lg:w-4/5 xl:w-1/2 2xl:w-2/5 flex justify-center px-4 mx-5 container">
+            <Card className="mt-5 w-full lg:w-4/5 xl:w-4/5 2xl:w-3/5 flex justify-center px-4 mx-5 container">
                 <h1 className="text-3xl font-bold text-black dark:text-white">Create New Release</h1>
                 <h2 className="text-2xl text-black dark:text-white">{(currentFlowPage.charAt(0).toUpperCase() + currentFlowPage.slice(1))}</h2>
                 <div className="mt-5 flex flex-col w-full justify-center gap-2">
