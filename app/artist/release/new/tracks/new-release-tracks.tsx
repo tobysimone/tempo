@@ -7,6 +7,7 @@ export interface NewReleaseTracksProps {
     addTrack: () => void;
     onBackClicked: () => void;
     onNextClicked: () => void;
+    nextEnabled: boolean;
 }
 
 export default function NewReleaseTracks(props: NewReleaseTracksProps) {
@@ -14,7 +15,8 @@ export default function NewReleaseTracks(props: NewReleaseTracksProps) {
         tracks,
         addTrack,
         onBackClicked,
-        onNextClicked
+        onNextClicked,
+        nextEnabled
     } = props;
 
     return (
@@ -34,7 +36,7 @@ export default function NewReleaseTracks(props: NewReleaseTracksProps) {
                         Back
                     </p>
                 </Button>
-                <Button onClick={onNextClicked}>
+                <Button onClick={onNextClicked} disabled={!nextEnabled}>
                     <p className="text-md font-normal text-white">
                         Next
                     </p>

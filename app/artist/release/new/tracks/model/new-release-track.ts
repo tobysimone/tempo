@@ -1,5 +1,5 @@
 export interface NewReleaseTrack {
     id: string;
-    title?: string;
+    title: string;
     file?: File;
 }

@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 export interface NewReleaseTrackCardProps {
     track: NewReleaseTrack;
     removeTrack: (id: string) => void;
-    setTrackFile: (id: string, file: File) => void;
+    updateTrack: (track: NewReleaseTrack) => void;
 }
 
 export default function NewReleaseTrackCard(props: NewReleaseTrackCardProps) {
@@ -17,7 +17,7 @@ export default function NewReleaseTrackCard(props: NewReleaseTrackCardProps) {
             file
         },
         removeTrack,
-        setTrackFile
+        updateTrack
     } = props;
 
     const handleTrackFileSelected = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +28,7 @@ export default function NewReleaseTrackCard(props: NewReleaseTrackCardProps) {
             return;
         }
         console.log(file);
-        setTrackFile(id, file);
+        updateTrack(({ id, title, file }));
     }
 
     return (
@@ -39,6 +39,11 @@ export default function NewReleaseTrackCard(props: NewReleaseTrackCardProps) {
                 type="text"
                 className="mb-6 rounded-md px-4 bg-inherit border text-black dark:text-white"
                 value={title}
+                onChange={(e) => {
+                    e.preventDefault();
+                    const title = e.target.value;
+                    updateTrack(({ id, title, file }));
+                }}
             />
             <label htmlFor="track-file" className="text-lg text-black dark:text-white">Track File</label>
             {file?.name ? (

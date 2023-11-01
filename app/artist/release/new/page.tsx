@@ -10,6 +10,7 @@ import NewReleaseDetails from './detail/new-release-details';
 import NewReleaseTracks from './tracks/new-release-tracks';
 import { NewReleaseTrack } from './tracks/model/new-release-track';
 import NewReleaseTrackCard from './tracks/components/new-release-track-card';
+import NewReleaseSubmit from './submit/new-release-submit';
 
 export default function NewRelease() {
     const supabase = createClientComponentClient();
@@ -27,7 +28,11 @@ export default function NewRelease() {
     const [tracks, setTracks] = useState<NewReleaseTrack[]>([]);
 
     //general release
-    const [currentFlowPage, setCurrentFlowPage] = useState<'detail' | 'track'>('track');
+    const [currentFlowPage, setCurrentFlowPage] = useState<'details' | 'tracks' | 'submit'>('submit');
+
+    const onSubmit = () => {
+
+    }
 
     const uploadArtwork = async () => {
         if (!editedArtwork || !artworkFilename) {
@@ -58,12 +63,15 @@ export default function NewRelease() {
             !!releaseDescription && 
             !!releaseType &&
             !!artworkFilename
-        )
+        );
     }
+
+    const canMoveToSubmitPage = () => 
+        tracks.filter(t => !t.title || !t.file).length == 0;
 
     const addTrack = () => {
         const _tracks = [...tracks];
-        _tracks.push({ id: uuidv4() });
+        _tracks.push({ id: uuidv4(), title: '' });
         setTracks(_tracks);
     }
 
@@ -73,16 +81,16 @@ export default function NewRelease() {
         setTracks(_tracks);
     }
 
-    const setTrackFile = (id: string, file: File) => {
+    const updateTrack = (track: NewReleaseTrack) => {
         let _tracks = [...tracks];
-        const index = _tracks.findIndex(t => t.id == id);
-        _tracks[index].file = file;
+        const index = _tracks.findIndex(t => t.id == track.id);
+        _tracks[index] = track;
         setTracks(_tracks);
     }
 
     const getFlowPage = () => {
         switch(currentFlowPage) {
-            case 'detail':
+            case 'details':
                 return (
                     <NewReleaseDetails
                         releaseTitle={releaseTitle}
@@ -99,16 +107,33 @@ export default function NewRelease() {
                         setArtworkFilename={setArtworkFilename}
                         nextEnabled={canMoveToTracksPage()}
                         onNextClicked={() => {
-                            setCurrentFlowPage('track');
+                            setCurrentFlowPage('tracks');
                         }}
                     />
                 )
-            case 'track':
+            case 'tracks':
                 return (
                     <NewReleaseTracks
                         tracks={tracks}
                         addTrack={addTrack}
-                        onBackClicked={() => setCurrentFlowPage('detail')}
+                        onBackClicked={() => setCurrentFlowPage('details')}
+                        onNextClicked={() => setCurrentFlowPage('submit')}
+                        nextEnabled={canMoveToSubmitPage()}
+                    />
+                )
+            case 'submit':
+                return (
+                    <NewReleaseSubmit
+                        releaseTitle={releaseTitle}
+                        releaseDate={releaseDate}
+                        artwork={editedArtwork}
+                        artworkFilename={artworkFilename}
+                        releaseDescription={releaseDescription}
+                        releaseType={releaseType}
+                        releaseTags={releaseTags}
+                        tracks={tracks}
+                        onBackClicked={() => setCurrentFlowPage('tracks')}
+                        onNextClicked={onSubmit}
                     />
                 )
         }
@@ -116,18 +141,19 @@ export default function NewRelease() {
 
     return (
         <>
-            <Card className="mt-5 w-full lg:w-3/5 2xl:w-2/5 flex justify-center px-4 mx-5 container">
+            <Card className="mt-5 w-full lg:w-4/5 xl:w-1/2 2xl:w-2/5 flex justify-center px-4 mx-5 container">
                 <h1 className="text-3xl font-bold text-black dark:text-white">Create New Release</h1>
+                <h2 className="text-2xl text-black dark:text-white">{(currentFlowPage.charAt(0).toUpperCase() + currentFlowPage.slice(1))}</h2>
                 <div className="mt-5 flex flex-col w-full justify-center gap-2">
                     {getFlowPage()}
                 </div>
             </Card>
-            {currentFlowPage == 'track' && tracks.map(track => (
+            {currentFlowPage == 'tracks' && tracks.map(track => (
                 <NewReleaseTrackCard
-                    key={uuidv4()}
+                    key={track.id}
                     track={track}
                     removeTrack={removeTrack}
-                    setTrackFile={setTrackFile}
+                    updateTrack={updateTrack}
                 />
             ))}
         </>
