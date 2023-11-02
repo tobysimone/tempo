@@ -1,6 +1,6 @@
-import { SignUpMessage } from "@/app/_shared/_constants/sign-up-message";
-import { TableConstants } from "@/app/_shared/_constants/table-constants";
-import { UserConstants } from "@/app/_shared/_constants/user-constants";
+import { SignUpMessage } from "@/app/_shared/constants/sign-up-message";
+import { TableConstants } from "@/app/_shared/constants/table-constants";
+import { UserConstants } from "@/app/_shared/constants/user-constants";
 import { SupabaseClient, createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";

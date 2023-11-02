@@ -1,4 +1,4 @@
-import { Button } from "flowbite-react";
+import { Button, Card } from "flowbite-react";
 import Link from "next/link";
 import { NewReleaseTrack } from "../tracks/model/new-release-track";
 
@@ -31,7 +31,7 @@ export default function NewReleaseSubmit(props: NewReleaseSubmitProps) {
 
     return (
         <>
-            <p>Please review and ensure the information about your release is accurate before submitting</p>
+            <p className="text-black dark:text-white">Please review and ensure the information about your release is accurate before submitting</p>
             <p className="mt-5 text-lg font-semibold text-black dark:text-white">
                 Release Title: <span className="font-normal">{releaseTitle}</span>
             </p>
@@ -50,6 +50,22 @@ export default function NewReleaseSubmit(props: NewReleaseSubmitProps) {
             <p className="mt-3 text-lg font-semibold text-black dark:text-white">
                 Artwork Filename: <span className="font-normal">{artworkFilename}</span>
             </p>
+            {artwork && (
+                <img src={artwork} style={{ width: '25%' }} />
+            )}
+            <p className="mt-3 text-lg font-semibold text-black dark:text-white">
+                Tracks
+            </p>
+            {tracks.map(track => (
+                <Card>
+                    <p className="mt-1 text-lg font-normal text-black dark:text-white">
+                        Title: {track.title}
+                    </p>
+                    <p className="mt-1 text-lg font-normal text-black dark:text-white">
+                        File: {track.file?.name}
+                    </p>
+                </Card>
+            ))}
             <div className="flex flex-row flex-1 items-center ml-auto mt-5">
                 <Link href="#" className="mr-5 animated-link text-black dark:text-white">Cancel</Link>
                 <Button onClick={onBackClicked} className="mr-5">
@@ -59,7 +75,7 @@ export default function NewReleaseSubmit(props: NewReleaseSubmitProps) {
                 </Button>
                 <Button onClick={onNextClicked}>
                     <p className="text-md font-normal text-white">
-                        Next
+                        Submit
                     </p>
                 </Button>
             </div>

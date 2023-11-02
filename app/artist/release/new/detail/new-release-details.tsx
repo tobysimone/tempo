@@ -80,14 +80,14 @@ export default function NewReleaseDetails(props: NewReleaseDetailsProps) {
             <label htmlFor="artwork" className="text-lg text-black dark:text-white">Artwork</label>
             <input 
                 type="file" 
-                accept="image/*" 
+                accept="image/*"
                 name="artwork"
                 className="text-black dark:text-white rounded-md mb-6" 
                 onChange={handleArtworkFileSelected} 
             />
 
             {editedArtwork && (
-                <img src={editedArtwork} className="mb-6" style={{ width: '100%' }} />
+                <img src={editedArtwork} className="mb-6" style={{ width: '25%' }} />
             )}
 
             <label htmlFor="release-description" className="text-lg text-black dark:text-white">Release Description</label>
