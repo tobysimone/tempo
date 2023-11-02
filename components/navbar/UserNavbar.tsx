@@ -1,5 +1,7 @@
 'use client'
 
+import './styles.css';
+
 import { UserType } from "@/app/_shared/constants/user-constants";
 import { useUser } from "@/app/_shared/hooks/useUser";
 import { useUserType } from "@/app/_shared/hooks/useUserType";
@@ -27,7 +29,11 @@ export default function UserNavbar() {
             <Navbar rounded>
                 <Navbar.Brand href="/">
                     <img src="https://i.pinimg.com/736x/ed/18/39/ed18392a24e4a718d5bf11663d5e2b07.jpg" className="mr-3 h-9 sm:h-9 rounded-lg" alt="Tempo Logo" />
-                    <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Tempo</span>
+                    <span 
+                        id="brand-name"
+                        className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+                            Tempo
+                    </span>
                 </Navbar.Brand>
                 { userInfo?.authenticated ? (
                     <UserNavigation
