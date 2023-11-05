@@ -27,7 +27,6 @@ export default function NewReleaseTrackCard(props: NewReleaseTrackCardProps) {
             toast.error('Could not upload track file, please try again');
             return;
         }
-        console.log(file);
         updateTrack(({ id, title, file }));
     }
 
