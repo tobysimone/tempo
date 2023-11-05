@@ -13,9 +13,11 @@ import NewReleaseTrackCard from './tracks/components/new-release-track-card';
 import NewReleaseSubmit from './submit/new-release-submit';
 import toast from 'react-hot-toast';
 import { CreateReleaseRequest } from '../../../api/artist/release/route';
+import { useRouter } from 'next/navigation';
 
 export default function NewRelease() {
     const supabase = createClientComponentClient();
+    const router = useRouter();
 
     //release detail
     const [releaseTitle, setReleaseTitle] = useState('Growing Season');
@@ -37,7 +39,13 @@ export default function NewRelease() {
         const createReleaseResponse = await sendCreateReleaseRequest(request);
         if(createReleaseResponse && createReleaseResponse.ok) {
             const release = (await createReleaseResponse.json()).release;
-            await sendUploadTracksRequest(release.id);
+            const createTracksResponse = await sendUploadTracksRequest(release.id);
+            console.log(JSON.stringify(createTracksResponse));
+            if(createTracksResponse.ok) {
+                router.push('/artist/release/new/success');
+            } else {
+                router.push('/error');
+            }
         }
     }
 
@@ -60,7 +68,7 @@ export default function NewRelease() {
         return await fetch('/api/artist/release/track/', {
             method: 'POST',
             body: request
-        })
+        });
     }
 
     const createReleaseRequest = (): CreateReleaseRequest => {

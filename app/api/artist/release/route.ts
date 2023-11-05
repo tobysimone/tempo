@@ -39,7 +39,7 @@ async function createRelease(supabase: SupabaseClient, request: CreateReleaseReq
     return ({
       release,
       artwork  
-    })
+    });
 }
 
 async function createArtwork(supabase: SupabaseClient, releaseId: string, request: CreateReleaseRequest) {

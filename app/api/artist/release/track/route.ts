@@ -54,7 +54,7 @@ const insertTracks = async (supabase: SupabaseClient, bucketTracks: BucketTrack[
             track_url: bucketTrack.path,
             filename: bucketTrack.track?.file?.name,
             title: bucketTrack.track.title
-        }
+        };
     }
 
     const { data, error } = await supabase

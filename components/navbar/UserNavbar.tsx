@@ -76,7 +76,7 @@ function UserNavigation({ email, displayName, userType }: UserNavigationProps) {
                 arrowIcon={false}
                 inline
                 label={
-                    <Avatar alt="User settings" img="https://scontent.fosu2-2.fna.fbcdn.net/v/t39.30808-6/353822101_6893632817318069_1083019472348269985_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Wpbq5_HlrzkAX9qu2K_&_nc_ht=scontent.fosu2-2.fna&oh=00_AfAWRZhyoux4qHya_4o8eD9vwnNJMoFiYR3hoSaEBykXLA&oe=65467647" rounded />
+                    <Avatar alt="User settings" img="https://scontent.fosu2-2.fna.fbcdn.net/v/t39.30808-6/353822101_6893632817318069_1083019472348269985_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=fDmmCkJfXpsAX89nOSk&_nc_ht=scontent.fosu2-2.fna&oh=00_AfBUViB7K6APFGmbGOnaHtE-hkyS905Fmc9XeM8Ail6Rkg&oe=654C6507" rounded />
                 }>
                 {(displayName && email) && (
                     <Dropdown.Header>
