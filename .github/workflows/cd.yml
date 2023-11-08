@@ -30,4 +30,4 @@ jobs:
           git status
           ls
           npm install --only=prod
-          pm2 restart tempo
+          pm2 restart tempo-dev
