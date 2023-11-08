@@ -1,7 +1,7 @@
 import { User } from "@supabase/supabase-js";
 import { UserConstants, UserType } from "../constants/user-constants";
 
-export function useUserType(user?: User): UserType {
+export function getUserType(user?: User): UserType {
     if(!user) {
         return UserType.NONE;
     }

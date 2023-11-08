@@ -4,7 +4,7 @@ import './styles.css';
 
 import { UserType } from "@/app/_shared/constants/user-constants";
 import { useUser } from "@/app/_shared/hooks/useUser";
-import { useUserType } from "@/app/_shared/hooks/useUserType";
+import { getUserType } from "@/app/_shared/helpers/getUserType";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import Link from "next/link";
@@ -22,17 +22,15 @@ interface UserNavigationProps {
 export default function UserNavbar() {
     const supabase = createClientComponentClient();
     const userInfo = useUser(supabase);
-    const userType = useUserType(userInfo?.user);
+    const userType = getUserType(userInfo?.user);
 
     return (
         <div className="fixed z-20 w-full top-0 left-0">
             <Navbar rounded>
                 <Navbar.Brand href="/">
                     <img src="https://i.pinimg.com/736x/ed/18/39/ed18392a24e4a718d5bf11663d5e2b07.jpg" className="mr-3 h-9 sm:h-9 rounded-lg" alt="Tempo Logo" />
-                    <span 
-                        id="brand-name"
-                        className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-                            Tempo
+                    <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+                        Tempo
                     </span>
                 </Navbar.Brand>
                 { userInfo?.authenticated ? (
@@ -84,9 +82,7 @@ function UserNavigation({ email, displayName, userType }: UserNavigationProps) {
                         <span className="block truncate text-sm font-medium">{ email }</span>
                     </Dropdown.Header>
                 )}
-                <Dropdown.Item>
-                    <Link href={dashboardRoute}>Dashboard</Link>
-                </Dropdown.Item>
+                <Dropdown.Item onClick={() => router.push(dashboardRoute)}>Dashboard</Dropdown.Item>
                 <Dropdown.Item>Settings</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={async () => {
