@@ -1,16 +1,13 @@
-name: Create and publish a Docker image
+name: Create, publish and deploy Tempo to VPS
 
-# Configures this workflow to run every time a change is pushed to the branch called `release`.
 on:
   push:
     branches: ['release']
 
-# Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
-# There is a single job in this workflow. It's configured to run on the latest available version of Ubuntu.
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
@@ -45,3 +42,17 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Deploy using ssh
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USERNAME }}
+            key: ${{ secrets.PRIVATE_KEY }}
+            port: 22
+            script: |
+              cd ~/deploy/tempo
+              docker pull ghcr.io/tobysimone/tempo:release
+              docker run --publish 3000:3000 tempo:release
