@@ -30,4 +30,4 @@ jobs:
           git status
           ls
           npm install --only=prod
-          pm2 restart node1
+          pm2 restart tempo
