@@ -56,4 +56,4 @@ jobs:
             script: |
               cd ~/deploy/tempo
               docker pull ghcr.io/tobysimone/tempo:release
-              docker run --publish 3000:3000 tempo:release
+              docker run -d --publish 3000:3000 ghcr.io/tobysimone/tempo:release
