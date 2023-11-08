@@ -56,4 +56,6 @@ jobs:
             script: |
               cd ~/deploy/tempo
               docker pull ghcr.io/tobysimone/tempo:release
-              docker run -d --publish 3000:3000 ghcr.io/tobysimone/tempo:release
+              docker stop ghcr.io/tobysimone/tempo:release
+              docker system prune -f
+              docker run -dit --publish 3000:3000 ghcr.io/tobysimone/tempo:release
