@@ -73,3 +73,9 @@
   background-size: 0 3px, 100% 3px;
   cursor: pointer;
 }
+
+.plain-card {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border-style: none !important;
+}

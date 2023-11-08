@@ -19,7 +19,7 @@ export async function POST(request: Request) {
         const tracks = parseTracks(releaseId, formData);
         const bucketTracks = await uploadTracks(supabase, tracks);
         const trackIds = await insertTracks(supabase, bucketTracks);
-        console.log(await insertReleaseTracks(supabase, trackIds, releaseId));
+        await insertReleaseTracks(supabase, trackIds, releaseId);
         return NextResponse.json({}, { status: 200 });
     } catch (e) {
         console.error(`Error while uploading tracks for request: ${JSON.stringify(request)}`, e);

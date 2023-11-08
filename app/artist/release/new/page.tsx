@@ -2,7 +2,6 @@
 
 import './styles.css';
 
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Card } from "flowbite-react";
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
@@ -11,12 +10,10 @@ import NewReleaseTracks from './tracks/new-release-tracks';
 import { NewReleaseTrack } from './tracks/model/new-release-track';
 import NewReleaseTrackCard from './tracks/components/new-release-track-card';
 import NewReleaseSubmit from './submit/new-release-submit';
-import toast from 'react-hot-toast';
 import { CreateReleaseRequest } from '../../../api/artist/release/route';
 import { useRouter } from 'next/navigation';
 
 export default function NewRelease() {
-    const supabase = createClientComponentClient();
     const router = useRouter();
 
     //release detail
@@ -88,54 +85,6 @@ export default function NewRelease() {
             method: 'POST',
             body: JSON.stringify(request)
         });
-    }
-
-    const uploadTracks = async (releaseId: string) => {
-        tracks.map(async (track) => {
-            if(!track.file || !track.title) {
-                console.error(`Could not upload track, file or title is null`);
-                return;
-            }
-
-            const filepath = await uploadTrack(track);
-            if(!filepath) {
-                toast.error(`Could not upload track ${track.file?.name}, please try again later`);
-                return;
-            }
-
-            const { data, error } = await supabase
-                .from('track')
-                .insert({ 
-                    track_url: filepath,
-                    filename: track.file.name,
-                    title: track.title
-                })
-                .select()
-                .limit(1)
-                .single();
-            if(error) {
-                console.error(`Error while inserting track into database: ${error}`);
-                return;
-            }
-
-            return track;
-        })
-    }
-
-    const uploadTrack = async (track: NewReleaseTrack) => {
-        const filename = `${uuidv4()}-${track?.file?.name}}`;
-        const { data, error } = await supabase.storage
-            .from('track')
-            .upload(filename, track.file!, {
-                cacheControl: '3600',
-                upsert: false
-            });
-        if(error) {
-            console.error(`Error while upload track: ${error}`);
-            return;
-        }
-
-        return data.path;
     }
 
     const canMoveToTracksPage = () => {
@@ -223,7 +172,7 @@ export default function NewRelease() {
 
     return (
         <>
-            <Card className="mt-5 w-full lg:w-4/5 xl:w-4/5 2xl:w-3/5 flex justify-center px-4 mx-5 container">
+            <Card className="mt-5 w-full lg:w-4/5 xl:w-4/5 2xl:w-3/5 flex justify-center px-4 mx-5 container plain-card">
                 <h1 className="text-3xl font-bold text-black dark:text-white">Create New Release</h1>
                 <h2 className="text-2xl text-black dark:text-white">{(currentFlowPage.charAt(0).toUpperCase() + currentFlowPage.slice(1))}</h2>
                 <hr />
