@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 node:21-alpine
+FROM --platform=linux/arm64/v8 node:21-alpine
 
 ARG NEXT_PUBLIC_SUPABASE_URL
 ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
