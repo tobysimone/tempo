@@ -7,10 +7,11 @@ const nextConfig = {
   },
   async rewrites() {
     return {
-      beforeFiles: [
+      afterFiles: [
         {
           source: '/:path*',
-          destination: '/error',
+          destination: '/artist/homepage/:subdomain',
+          has: [{ type: 'host', key: 'subdomain', value: '(?<subdomain>.+)\.localhost' }]
         }
       ]
     }
