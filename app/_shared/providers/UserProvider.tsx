@@ -25,7 +25,6 @@ export const UserProvider = ({ children }: any) => {
         setUser(data.user);
         setDisplayName(data.displayName);
       }
-      console.log(response);
     })();
 
     return () => { ignore = true; }

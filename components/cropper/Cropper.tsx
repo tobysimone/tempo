@@ -25,8 +25,8 @@ export default function Cropper({ size, show, header, image, onCropComplete, onC
     const imageRef = useRef<HTMLImageElement>(null);
     const [crop, setCrop] = useState<Crop>({
         unit: '%',
-        width: 50,
-        height: 50,
+        width: 100,
+        height: 100,
         x: 0,
         y: 0
     });

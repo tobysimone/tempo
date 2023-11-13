@@ -3,7 +3,7 @@
 import '../styles.css';
 
 import Cropper from "@/components/cropper/Cropper";
-import { Button, Datepicker, Textarea, Toast } from "flowbite-react";
+import { Button, Datepicker, Textarea } from "flowbite-react";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
 import toast from 'react-hot-toast';
@@ -133,7 +133,7 @@ export default function NewReleaseDetails(props: NewReleaseDetailsProps) {
 
             {showCropper && (
                 <Cropper 
-                    size={'sm'} 
+                    size={'xl'} 
                     show={showCropper} 
                     header={'Edit Artwork'} 
                     image={rawArtwork} 
