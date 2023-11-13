@@ -37,7 +37,6 @@ export default function NewRelease() {
         if(createReleaseResponse && createReleaseResponse.ok) {
             const release = (await createReleaseResponse.json()).release;
             const createTracksResponse = await sendUploadTracksRequest(release.id);
-            console.log(JSON.stringify(createTracksResponse));
             if(createTracksResponse.ok) {
                 router.push('/artist/release/new/success');
             } else {
@@ -172,7 +171,7 @@ export default function NewRelease() {
 
     return (
         <>
-            <Card className="mt-5 w-full lg:w-4/5 xl:w-4/5 2xl:w-3/5 flex justify-center px-4 mx-5 container plain-card">
+            <Card className="mt-5 w-full lg:w-4/5 xl:w-4/5 2xl:w-3/5 flex justify-center px-4 mx-5 container">
                 <h1 className="text-3xl font-bold text-black dark:text-white">Create New Release</h1>
                 <h2 className="text-2xl text-black dark:text-white">{(currentFlowPage.charAt(0).toUpperCase() + currentFlowPage.slice(1))}</h2>
                 <hr />

@@ -18,7 +18,8 @@ export default function SetupArtistHomepage() {
 
     const savePreferences = async () => {
         const preferences = {
-            subdomain: subdomain
+            subdomain: subdomain,
+            description: description
         };
 
         await fetch('/api/artist/homepage/preferences', {
@@ -35,6 +36,7 @@ export default function SetupArtistHomepage() {
         (async () => {
             const preferences = await getPreferences();
             setSubdomain(preferences.subdomain);
+            setDescription(preferences.description);
         })();
     }, []);
 
@@ -50,7 +52,7 @@ export default function SetupArtistHomepage() {
 
     return (
         <>
-            <Card className="mt-5 w-full lg:w-4/5 xl:w-4/5 2xl:w-3/5 flex justify-center px-4 mx-5 container plain-card">
+            <Card className="mt-5 w-full lg:w-4/5 xl:w-4/5 2xl:w-3/5 flex justify-center px-4 mx-5 container">
                 <div className="flex flex-row items-center">
                     <h1 className="text-3xl font-bold text-black dark:text-white">Homepage Setup</h1>
                     <Button className='ml-auto' onClick={savePreferences} disabled={!formChanged}>

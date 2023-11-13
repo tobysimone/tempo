@@ -1,7 +1,8 @@
 import { getArtistIdFromUser } from "@/app/_shared/helpers/getArtistIdFromUser";
-import { SupabaseClient, createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { getHomepagePreferences, saveHomepagePreferences } from "./homepage-preferences-service";
 
 export interface HomepagePreferences {
     subdomain: string;
@@ -16,20 +17,14 @@ export async function PUT(request: Request) {
 }
 
 async function handleGet(_: Request) {
-    const supabase = createRouteHandlerClient({ cookies });
-    const artistId = await getArtistIdFromUser(supabase);
-
     try {
-        const { data: preferences, error } = await supabase
-            .from('artist_homepage_preferences')
-            .select()
-            .eq('artist_id', artistId)
-            .single();
-        if(error) {
-            throw new Error(`Error while getting artist homepage preferences: ${JSON.stringify(error)}`);
+        const supabase = createRouteHandlerClient({ cookies });
+        const artistId = await getArtistIdFromUser(supabase);
+        if(!artistId) {
+            throw new Error(`ArtistId is null, cannot get artist homepage preferences`);
         }
 
-        return NextResponse.json(preferences, { status: 200 });
+        return NextResponse.json(await getHomepagePreferences(artistId), { status: 200 });
     } catch (e) {
         console.error(`Error while getting artist homepage preferences: ${e}`);
         return NextResponse.json({}, { status: 500 });
@@ -37,34 +32,18 @@ async function handleGet(_: Request) {
 }
 
 async function handlePut(request: Request) {
-    const supabase = createRouteHandlerClient({ cookies });
-    const artistId = await getArtistIdFromUser(supabase);
-
     try {
+        const supabase = createRouteHandlerClient({ cookies });
+        const artistId = await getArtistIdFromUser(supabase);
         if(!artistId) {
             throw new Error(`ArtistId is null, cannot save artist homepage preferences`);
         }
 
         const preferences: HomepagePreferences = await request.json();
-        const savedPreferences = await saveHomepagePreferences(supabase, artistId, preferences);
+        const savedPreferences = await saveHomepagePreferences(preferences, artistId);
         return NextResponse.json(savedPreferences, { status: 200 });
     } catch (e) {
         console.error(`Error while saving homepage preferences: ${e}`);
         return NextResponse.json({}, { status: 500 });
     }
-}
-
-async function saveHomepagePreferences(supabase: SupabaseClient, artistId: string, preferences: HomepagePreferences) {
-    const { data, error } = await supabase
-        .from('artist_homepage_preferences')
-        .insert({ 
-            artist_id: artistId,
-            ...preferences
-        })
-        .select()
-        .single();
-    if(error) {
-        throw new Error(`Error while saving artist homepage preferences: ${JSON.stringify(preferences)}, artistId: ${artistId}, error: ${JSON.stringify(error)}`, { cause: error });
-    }
-    return data;
 }
