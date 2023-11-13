@@ -3,9 +3,9 @@
 import './styles.css';
 
 import { UserType } from "@/app/_shared/constants/user-constants";
-import { useUser } from "@/app/_shared/hooks/useUser";
+import { useUser as userUserContext } from "@/app/_shared/hooks/useUserContext";
 import { getUserType } from "@/app/_shared/helpers/getUserType";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { SupabaseClient, createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -17,12 +17,13 @@ interface UserNavigationProps {
     email: string | undefined;
     displayName: string | null;
     userType: UserType;
+    supabase: SupabaseClient;
 }
 
 export default function UserNavbar() {
     const supabase = createClientComponentClient();
-    const userInfo = useUser(supabase);
-    const userType = getUserType(userInfo?.user);
+    const userContext = userUserContext();
+    const userType = getUserType(userContext.user);
 
     return (
         <div className="fixed z-20 w-full top-0 left-0">
@@ -33,11 +34,12 @@ export default function UserNavbar() {
                         Tempo
                     </span>
                 </Navbar.Brand>
-                { userInfo?.authenticated ? (
+                { userContext ? (
                     <UserNavigation
-                        email={userInfo?.user?.email}
-                        displayName={userInfo?.displayName}
+                        email={userContext?.user?.email}
+                        displayName={userContext?.displayName}
                         userType={userType}
+                        supabase={supabase}
                     />
                 ) : (
                     <div>
@@ -49,9 +51,8 @@ export default function UserNavbar() {
     )
 }
 
-function UserNavigation({ email, displayName, userType }: UserNavigationProps) {
+function UserNavigation({ supabase, email, displayName, userType }: UserNavigationProps) {
     const [dashboardRoute, setDashboardRoute] = useState<string>('/');
-    const supabase = createClientComponentClient();
     const router = useRouter();
 
     useEffect(() => {

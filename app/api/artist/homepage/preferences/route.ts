@@ -7,7 +7,36 @@ export interface HomepagePreferences {
     subdomain: string;
 }
 
-export async function POST(request: Request) {
+export async function GET(request: Request) {
+    return handleGet(request);
+}
+
+export async function PUT(request: Request) {
+    return handlePut(request);
+}
+
+async function handleGet(_: Request) {
+    const supabase = createRouteHandlerClient({ cookies });
+    const artistId = await getArtistIdFromUser(supabase);
+
+    try {
+        const { data: preferences, error } = await supabase
+            .from('artist_homepage_preferences')
+            .select()
+            .eq('artist_id', artistId)
+            .single();
+        if(error) {
+            throw new Error(`Error while getting artist homepage preferences: ${JSON.stringify(error)}`);
+        }
+
+        return NextResponse.json(preferences, { status: 200 });
+    } catch (e) {
+        console.error(`Error while getting artist homepage preferences: ${e}`);
+        return NextResponse.json({}, { status: 500 });
+    }
+}
+
+async function handlePut(request: Request) {
     const supabase = createRouteHandlerClient({ cookies });
     const artistId = await getArtistIdFromUser(supabase);
 

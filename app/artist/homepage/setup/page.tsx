@@ -1,23 +1,33 @@
 'use client'
 
 import { Button, Card } from "flowbite-react";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function SetupArtistHomepage() {
     const [subdomain, setSubdomain] = useState<string>('');
+
+    const getPreferences = useCallback(async () => {
+        const response = await fetch('/api/artist/homepage/preferences');
+        return await response.json();
+    }, []);
 
     const savePreferences = async () => {
         const preferences = {
             subdomain: subdomain
         };
 
-        const response = await fetch('/api/artist/homepage/update', {
-            method: 'POST',
+        await fetch('/api/artist/homepage/preferences', {
+            method: 'PUT',
             body: JSON.stringify(preferences)
         });
-
-        console.log(response);
     }
+
+    useEffect(() => {
+        (async () => {
+            const preferences = await getPreferences();
+            setSubdomain(preferences.subdomain);
+        })();
+    }, []);
 
     return (
         <>

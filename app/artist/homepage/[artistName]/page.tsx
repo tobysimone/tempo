@@ -8,34 +8,12 @@ export default async function Page({ params }: { params: { artistName: string } 
     return <h1>{ JSON.stringify(data) }</h1>;
 }
 
-async function getArtistId(artistName: string) {
-    const supabase = createServerComponentClient({ cookies });
-    const { data, error } = await supabase
-        .from('artist')
-        .select('id')
-        .eq('name', artistName)
-        .single();
-
-    if (error) {
-        console.error(error);
-        return null;
-    }
-
-    return data?.id;
-}
-
 async function getHomepagePreferences(artistName: string) {
-    const artistId = await getArtistId(artistName);
-    if(!artistId) {
-        console.log('Artist not found');
-        return null;
-    }
-
     const supabase = createServerComponentClient({ cookies });
     const { data, error } = await supabase
         .from('artist_homepage_preferences')
         .select('*')
-        .eq('artist_id', artistId)
+        .eq('subdomain', artistName)
         .single();
 
     if (error) {
