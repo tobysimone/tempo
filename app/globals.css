@@ -67,6 +67,9 @@
   background-position: 100% 100%, 0 100%;
   background-repeat: no-repeat;
   transition: background-size 200ms;
+  color: #0000FF;
+  letter-spacing: 0.3px;
+  padding-bottom: 4px;
 }
 
 .animated-link:hover {
