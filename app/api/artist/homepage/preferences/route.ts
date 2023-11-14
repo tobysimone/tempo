@@ -2,11 +2,7 @@ import { getArtistIdFromUser } from "@/app/_shared/helpers/getArtistIdFromUser";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { getHomepagePreferences, saveHomepagePreferences } from "./homepage-preferences-service";
-
-export interface HomepagePreferences {
-    subdomain: string;
-}
+import { HomepagePreferences, getHomepagePreferences, saveHomepagePreferences } from "./homepage-preferences-service";
 
 export async function GET(request: Request) {
     return handleGet(request);
@@ -39,7 +35,8 @@ async function handlePut(request: Request) {
             throw new Error(`ArtistId is null, cannot save artist homepage preferences`);
         }
 
-        const preferences: HomepagePreferences = await request.json();
+        const data = await request.json();
+        const preferences: HomepagePreferences = data.preferences; 
         const savedPreferences = await saveHomepagePreferences(preferences, artistId);
         return NextResponse.json(savedPreferences, { status: 200 });
     } catch (e) {

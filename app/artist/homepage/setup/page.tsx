@@ -26,12 +26,17 @@ export default function SetupArtistHomepage() {
     const savePreferences = async () => {
         const preferences = {
             subdomain: subdomain,
-            description: description
+            description: description,
+            header: header
         };
 
         await fetch('/api/artist/homepage/preferences', {
             method: 'PUT',
-            body: JSON.stringify(preferences)
+            body: JSON.stringify({
+                preferences: {
+                    ...preferences   
+                }
+            })
         });
     }
 
@@ -44,6 +49,7 @@ export default function SetupArtistHomepage() {
             const preferences = await getPreferences();
             setSubdomain(preferences.subdomain);
             setDescription(preferences.description);
+            setHeader(preferences.header);
         })();
     }, []);
 
@@ -97,13 +103,14 @@ export default function SetupArtistHomepage() {
                     style={{ resize: 'none' }}
                 />
                 <label className="mt-5 text-lg text-black dark:text-white font-bold">Header Image</label>
-                { header && headerCropped && (
+                { header && (
                     <img src={header} className="mt-3" style={{ }} />
                 )}
-                
+
                 <ImageHeaderPicker onImagePicked={(image: string) => {
                     setHeader(image);
                     setShowCropper(true);
+                    setFormChanged(true);
                 }} />
 
                 { showPreview && (
@@ -143,6 +150,7 @@ export default function SetupArtistHomepage() {
                         onClose={() => {
                             setShowCropper(false);
                             setHeaderCropped(false);
+                            setHeader('');
                         }}
                         onError={(error: string) => {
                             setShowCropper(false);
@@ -185,7 +193,9 @@ function ImageHeaderPicker({ onImagePicked }: { onImagePicked: (image: string) =
         if(!filesContent || filesContent.length == 0) {
             return;
         }
-        
+
+        console.log(JSON.stringify(filesContent[0]))
+
         onImagePicked(filesContent[0].content);
     }, [filesContent]);
 
