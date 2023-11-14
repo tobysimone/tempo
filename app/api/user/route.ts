@@ -8,11 +8,12 @@ export async function GET(request: Request) {
     try {
         return NextResponse.json(await handleGet(request), { status: 200 });
     } catch (e) {
+        console.error(e);
         return NextResponse.json({ error: e }, { status: 500 });
     }
 }
 
-async function handleGet(request: Request) {
+async function handleGet(_: Request) {
     const supabase = createRouteHandlerClient({ cookies });
     const session = await getSession(supabase);
     if(!session) {
@@ -31,10 +32,8 @@ function getDisplayName(supabase: SupabaseClient, userType: string, user: User) 
     switch(userType) {
         case UserConstants.USER_TYPE_FAN:
             return getFanDisplayName(supabase, user);
-            break;
         case UserConstants.USER_TYPE_ARTIST:
             return getArtistDisplayName(supabase, user);
-            break;
         default:
             return null;
     }
@@ -87,7 +86,6 @@ function getUserType(user: User): string {
     return user.user_metadata['type'];
 }
 
-//function which returns the supabase session user 
 async function getSession(supabase: SupabaseClient) {
     return (await supabase.auth.getSession()).data?.session;
 }

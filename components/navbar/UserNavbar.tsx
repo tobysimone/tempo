@@ -24,7 +24,7 @@ export default function UserNavbar() {
     const supabase = createClientComponentClient();
     const userContext = userUserContext();
     const userType = getUserType(userContext.user);
-
+    
     return (
         <div className="fixed z-20 w-full top-0 left-0">
             <Navbar rounded>
@@ -34,7 +34,7 @@ export default function UserNavbar() {
                         Tempo
                     </span>
                 </Navbar.Brand>
-                { userContext ? (
+                { userContext?.user?.aud === 'authenticated' ? (
                     <UserNavigation
                         email={userContext?.user?.email}
                         displayName={userContext?.displayName}

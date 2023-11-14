@@ -9,30 +9,10 @@ export default function Login() {
   const signUpType = searchParams.get('type') ?? '';
 
   return (
-    <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
-      <Link
-        href="/"
-        className="absolute left-8 top-16 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
-        >
-          <polyline points="15 18 9 12 15 6" />
-        </svg>{' '}
-        Back
-      </Link>
-
+    <div className="mt-5 flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
+      <h1 className="text-2xl font-bold text-black dark:text-white">Login</h1>
       <form
-        className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
+        className="mt-5 flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
         action="/auth/sign-in"
         method="post"
       >
@@ -40,29 +20,29 @@ export default function Login() {
           Email
         </label>
         <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
+          className="rounded-md px-4 py-2 bg-inherit border"
           name="email"
           placeholder="you@example.com"
           required
         />
-        <label className="text-md" htmlFor="password">
+        <label className="text-md mt-3" htmlFor="password">
           Password
         </label>
         <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
+          className="rounded-md px-4 py-2 bg-inherit border"
           type="password"
           name="password"
           placeholder="••••••••"
           required
         />
         { !signUpType && 
-          <button className="bg-green-700 rounded px-4 py-2 text-white mb-2">
+          <button className="bg-green-700 rounded px-4 py-2 text-white mt-5">
             Sign In
           </button>
         }
         <button
           formAction="/auth/sign-up"
-          className="border border-gray-700 rounded px-4 py-2 mb-2"
+          className="border border-gray-700 rounded px-4 py-2 mt-3"
         >
           Sign Up
         </button>

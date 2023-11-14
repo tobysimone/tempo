@@ -1,40 +1,21 @@
 'use client'
 
+import { Button } from 'flowbite-react';
 import Link from 'next/link';
 
 export default function SignUp() {
     return (
-        <div className="flex flex-1 flex-col w-full px-8 sm:max-w-md justify-center gap-2">
-            <Link
-                href="/"
-                className="absolute left-8 top-16 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
-                >
-                    <polyline points="15 18 9 12 15 6" />
-                </svg>{' '}
-                Back
-            </Link>
-            
-            <Link href="/signup/fan" className="py-2 px-4 mb-2 rounded-md no-underline text-foreground bg-btn-background-action hover:bg-btn-background-action-hover flex items-center justify-center">
+        <div className="mt-5 flex flex-1 flex-col w-full px-8 sm:max-w-md justify-center gap-2">
+            <h1 className="text-2xl font-bold text-black dark:text-white">Sign Up</h1>
+            <Button href="/signup/fan" className="mt-5">
                 Sign up as a fan
-            </Link>
-            <Link href="/signup/artist" className="py-2 px-4 mb-2 rounded-md no-underline text-foreground bg-btn-background-action hover:bg-btn-background-action-hover flex items-center justify-center">
+            </Button>
+            <Button href="/signup/artist" className="mt-3">
                 Sign up as an artist
-            </Link>
-            <Link href="/signup/label" className="py-2 px-4 mb-2 rounded-md no-underline text-foreground bg-btn-background-action hover:bg-btn-background-action-hover flex items-center justify-center">
+            </Button>
+            <Button href="/signup/label" className="mt-3">
                 Sign up as a label
-            </Link>
+            </Button>
         </div>
     )
 }
