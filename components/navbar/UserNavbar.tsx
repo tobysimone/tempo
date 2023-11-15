@@ -3,8 +3,8 @@
 import './styles.css';
 
 import { UserType } from "@/app/_shared/constants/user-constants";
+import { getUserType } from '@/app/_shared/helpers/AccountHelper';
 import { useUser as userUserContext } from "@/app/_shared/hooks/useUserContext";
-import { getUserType } from "@/app/_shared/helpers/getUserType";
 import { SupabaseClient, createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import Link from "next/link";

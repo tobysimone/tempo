@@ -1,8 +1,8 @@
-import { getArtistIdFromUser } from "@/app/_shared/helpers/getArtistIdFromUser";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { HomepagePreferences, getHomepagePreferences, saveHomepagePreferences } from "./homepage-preferences-service";
+import { getArtistIdFromUser } from "@/app/_shared/helpers/AccountHelper";
 
 export async function GET(request: Request) {
     return handleGet(request);
@@ -20,7 +20,7 @@ async function handleGet(_: Request) {
             throw new Error(`ArtistId is null, cannot get artist homepage preferences`);
         }
 
-        return NextResponse.json(await getHomepagePreferences(artistId), { status: 200 });
+        return NextResponse.json(await getHomepagePreferences({ artistId: artistId }), { status: 200 });
     } catch (e) {
         console.error(`Error while getting artist homepage preferences: ${e}`);
         return NextResponse.json({}, { status: 500 });
@@ -37,7 +37,7 @@ async function handlePut(request: Request) {
 
         const data = await request.json();
         const preferences: HomepagePreferences = data.preferences; 
-        const savedPreferences = await saveHomepagePreferences(preferences, artistId);
+        const savedPreferences = await saveHomepagePreferences(preferences, artistId, data.headerFileExtension);
         return NextResponse.json(savedPreferences, { status: 200 });
     } catch (e) {
         console.error(`Error while saving homepage preferences: ${e}`);

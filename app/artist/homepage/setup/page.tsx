@@ -1,5 +1,6 @@
 'use client'
 
+import { getFileExtension } from "@/app/_shared/helpers/FileHelper";
 import { FlowbiteTheme } from "@/app/_shared/theme/flowbite-theme";
 import Cropper from "@/components/cropper/Cropper";
 import { Button, Card, Modal } from "flowbite-react";
@@ -16,7 +17,7 @@ export default function SetupArtistHomepage() {
     const [showCropper, setShowCropper] = useState<boolean>(false);
     const [formChanged, setFormChanged] = useState<boolean>(false);
     const [header, setHeader] = useState<string>('');
-    const [headerCropped, setHeaderCropped] = useState<boolean>(false);
+    const [headerFileExtension, setHeaderFileExtension] = useState<string>('');
 
     const getPreferences = useCallback(async () => {
         const response = await fetch('/api/artist/homepage/preferences');
@@ -35,7 +36,8 @@ export default function SetupArtistHomepage() {
             body: JSON.stringify({
                 preferences: {
                     ...preferences   
-                }
+                },
+                headerFileExtension
             })
         });
     }
@@ -61,6 +63,12 @@ export default function SetupArtistHomepage() {
     const onDescriptionChange = (e: any) => {
         setDescription(e.target?.value);
         setFormChanged(true);
+    }
+
+    const resetCropper = () => {
+        setShowCropper(false);
+        setHeader('');
+        setHeaderFileExtension('');
     }
 
     return (
@@ -107,10 +115,11 @@ export default function SetupArtistHomepage() {
                     <img src={header} className="mt-3" style={{ }} />
                 )}
 
-                <ImageHeaderPicker onImagePicked={(image: string) => {
+                <ImageHeaderPicker onImagePicked={(image: string, extension: string) => {
                     setHeader(image);
                     setShowCropper(true);
                     setFormChanged(true);
+                    setHeaderFileExtension(extension);
                 }} />
 
                 { showPreview && (
@@ -145,17 +154,10 @@ export default function SetupArtistHomepage() {
                         onCropComplete={(croppedHeader) => {
                             setHeader(croppedHeader);
                             setShowCropper(false);
-                            setHeaderCropped(true);
                         }}
-                        onClose={() => {
-                            setShowCropper(false);
-                            setHeaderCropped(false);
-                            setHeader('');
-                        }}
+                        onClose={resetCropper}
                         onError={(error: string) => {
-                            setShowCropper(false);
-                            setHeader('');
-                            setHeaderCropped(false);
+                            resetCropper();
                             toast.error('Could not upload header, please try again');
                             console.error(error);
                         }}
@@ -166,9 +168,9 @@ export default function SetupArtistHomepage() {
     )
 }
 
-function ImageHeaderPicker({ onImagePicked }: { onImagePicked: (image: string) => void }) {
+function ImageHeaderPicker({ onImagePicked }: { onImagePicked: (image: string, extension: string) => void }) {
     const { openFilePicker, filesContent, loading, errors } = useFilePicker({
-        accept: 'image/*',
+        accept: ['image/png', 'image/jpg', 'image/jpeg'],
         multiple: false,
         readAs: 'DataURL',
         limitFilesConfig: {
@@ -194,9 +196,7 @@ function ImageHeaderPicker({ onImagePicked }: { onImagePicked: (image: string) =
             return;
         }
 
-        console.log(JSON.stringify(filesContent[0]))
-
-        onImagePicked(filesContent[0].content);
+        onImagePicked(filesContent[0].content, getFileExtension(filesContent[0].name));
     }, [filesContent]);
 
     return (

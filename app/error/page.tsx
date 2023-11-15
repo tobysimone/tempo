@@ -1,5 +1,5 @@
-export default function genericErrorPage() {
+export default function ErrorPage() {
     return (
-        <>You fucked up.</>
+        <span className="mt-5 text-5xl font-bold text-black dark:text-white">OOPS.</span>
     )
 }
