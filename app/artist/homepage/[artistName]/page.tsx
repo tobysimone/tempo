@@ -1,14 +1,13 @@
 import { getHomepagePreferences } from '@/app/api/artist/homepage/preferences/homepage-preferences-service';
 import './styles.css';
 
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Card } from 'flowbite-react';
-import { cookies } from 'next/headers';
 import React from 'react';
 import ErrorPage from '@/app/error/page';
+import { createServerSupabaseClient } from '@/app/_shared/helpers/ServerSupabaseClient';
 
 async function getArtist(artistId: string) {
-    const supabase = createServerComponentClient({ cookies });
+    const supabase = createServerSupabaseClient();
     const { data, error } = await supabase
         .from('artist')
         .select('*')
