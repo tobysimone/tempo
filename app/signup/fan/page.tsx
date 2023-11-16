@@ -4,7 +4,7 @@ import { Button, Card } from 'flowbite-react';
 
 export default function FanSignUp() {
     return (
-        <div className="mt-5 flex-1 flex flex-col w-full px-8 sm:max-w-xl justify-center gap-2">
+        <div className="mt-5 flex flex-col w-full sm:max-w-xl self-center gap-2 px-8">
             <form
                 className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
                 action="/auth/sign-up/fan"

@@ -73,7 +73,7 @@ export default function SetupArtistHomepage() {
 
     return (
         <>
-            <Card className="mt-5 w-full lg:w-4/5 xl:w-4/5 2xl:w-3/5 flex justify-center px-4 mx-5 container">
+            <Card className="mt-5 w-full lg:w-4/5 xl:w-4/5 2xl:w-3/5 flex self-center px-4 mx-5 container">
                 <div className="flex flex-row items-center">
                     <h1 className="text-3xl font-bold text-black dark:text-white">Homepage Setup</h1>
                     <Button className='ml-auto' onClick={savePreferences} disabled={!formChanged}>

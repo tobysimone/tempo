@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    --raised-background: #fff;
     --background: 200 20% 98%;
     --btn-background: 200 10% 91%;
     --btn-background-hover: 200 10% 89%;
@@ -14,6 +15,7 @@
 
   @media (prefers-color-scheme: dark) {
     :root {
+      --raised-background: #1f2a37;
       --background: 210, 34%, 13%;
       --btn-background: 200 10% 9%;
       --btn-background-hover: 200 10% 12%;

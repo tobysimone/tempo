@@ -1,0 +1,3 @@
+#artist-profile-sidebar > div:first-child {
+  background-color: theme('colors.raisedBackground') !important;
+}

@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link';
 import LoginMessage from './LoginMessage';
 import { useSearchParams } from 'next/navigation';
 
@@ -9,7 +8,7 @@ export default function Login() {
   const signUpType = searchParams.get('type') ?? '';
 
   return (
-    <div className="mt-5 flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
+    <div className="mt-5 flex flex-col w-full sm:max-w-md self-center gap-2 p-8">
       <h1 className="text-2xl font-bold text-black dark:text-white">Login</h1>
       <form
         className="mt-5 flex-1 flex flex-col w-full justify-center gap-2 text-foreground"

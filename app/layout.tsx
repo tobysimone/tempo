@@ -27,9 +27,9 @@ export default async function RootLayout({
               }
             }}
           />
-          <main className="min-h-screen bg-background flex flex-col items-center mb-5">
+          <main className="min-h-screen bg-background flex flex-col mb-5">
             <UserNavbar />
-            <div className="flex flex-col items-center w-full" style={{ marginTop: 60 }}>
+            <div className="flex flex-col w-full" style={{ marginTop: 60 }}>
               {children}
             </div>
           </main>

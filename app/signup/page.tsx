@@ -1,11 +1,10 @@
 'use client'
 
 import { Button } from 'flowbite-react';
-import Link from 'next/link';
 
 export default function SignUp() {
     return (
-        <div className="mt-5 flex flex-1 flex-col w-full px-8 sm:max-w-md justify-center gap-2">
+        <div className="mt-5 flex flex-col w-full sm:max-w-md self-center gap-2 px-8">
             <h1 className="text-2xl font-bold text-black dark:text-white">Sign Up</h1>
             <Button href="/signup/fan" className="mt-5">
                 Sign up as a fan

@@ -30,13 +30,15 @@ export default async function Page({ params }: { params: { artistName: string } 
     const artist = await getArtist(preferences?.artistId);
 
     return (
-        <Card 
-            className="container w-full"
-            imgSrc={preferences?.header}
-            style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}
-        >
-            <h1 className="text-3xl font-bold text-black dark:text-white">{artist?.name}</h1>
-            <p className="mt-5 text-black dark:text-white">{preferences?.description}</p>
-        </Card>
+        <div className="self-center">
+            <Card 
+                className="container w-full"
+                imgSrc={preferences?.header}
+                style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}
+            >
+                <h1 className="text-3xl font-bold text-black dark:text-white">{artist?.name}</h1>
+                <p className="mt-5 text-black dark:text-white">{preferences?.description}</p>
+            </Card>
+        </div>
     );
 }

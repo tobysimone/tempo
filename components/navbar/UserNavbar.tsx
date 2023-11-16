@@ -7,7 +7,7 @@ import { getUserType } from '@/app/_shared/helpers/AccountHelper';
 import { useUser as userUserContext } from "@/app/_shared/hooks/useUserContext";
 import { FlowbiteTheme } from '@/app/_shared/theme/flowbite-theme';
 import { SupabaseClient, createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Avatar, Dropdown, Navbar } from "flowbite-react";
+import { Avatar, Dropdown, Flowbite, Navbar } from "flowbite-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from 'react';
@@ -25,11 +25,9 @@ export default function UserNavbar() {
     const userContext = userUserContext();
     const userType = getUserType(userContext.user);
 
-    console.log(userContext);
-
     return (
         <div className="fixed z-20 w-full top-0 left-0" style={{ height: 60 }}>
-            <Navbar rounded style={{ height: 60 }}>
+            <Navbar rounded id="user-navbar" theme={FlowbiteTheme.NAVBAR}>
                 <Navbar.Brand href="/">
                     <img src="https://i.pinimg.com/736x/ed/18/39/ed18392a24e4a718d5bf11663d5e2b07.jpg" className="mr-3 h-9 sm:h-9 rounded-lg" alt="Tempo Logo" />
                     <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">

@@ -31,7 +31,7 @@ export default function NewReleaseTrackCard(props: NewReleaseTrackCardProps) {
     }
 
     return (
-        <Card className="mt-5 w-full lg:w-3/5 2xl:w-2/5 flex justify-center px-4 mx-5 container">
+        <Card className="mt-5 w-full lg:w-3/5 2xl:w-2/5 flex self-center px-4 mx-5 container">
             <label htmlFor="track-title" className="text-lg text-black dark:text-white">Track Title</label>
             <input
                 name="track-title"

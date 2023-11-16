@@ -26,6 +26,11 @@
     }
 }
 
-nav > div:first-child {
+#user-navbar {
+    height: 60px;
+    background-color: theme('colors.raisedBackground') !important;
+}
+
+#user-navbar > div:first-child {
     height: 40px !important;
 }
