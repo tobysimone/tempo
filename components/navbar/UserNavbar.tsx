@@ -5,13 +5,12 @@ import './styles.css';
 import { UserType } from "@/app/_shared/constants/user-constants";
 import { getUserType } from '@/app/_shared/helpers/AccountHelper';
 import { useUser as userUserContext } from "@/app/_shared/hooks/useUserContext";
+import { FlowbiteTheme } from '@/app/_shared/theme/flowbite-theme';
 import { SupabaseClient, createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
-export const dynamic = 'force-dynamic';
 
 interface UserNavigationProps {
     email: string | undefined;
@@ -26,8 +25,8 @@ export default function UserNavbar() {
     const userType = getUserType(userContext.user);
     
     return (
-        <div className="fixed z-20 w-full top-0 left-0">
-            <Navbar rounded>
+        <div className="fixed z-20 w-full top-0 left-0" style={{ height: 60 }}>
+            <Navbar rounded style={{ height: 60 }}>
                 <Navbar.Brand href="/">
                     <img src="https://i.pinimg.com/736x/ed/18/39/ed18392a24e4a718d5bf11663d5e2b07.jpg" className="mr-3 h-9 sm:h-9 rounded-lg" alt="Tempo Logo" />
                     <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
@@ -42,9 +41,7 @@ export default function UserNavbar() {
                         supabase={supabase}
                     />
                 ) : (
-                    <div>
-                        <NoUserNavigation />
-                    </div>
+                    <NoUserNavigation />
                 )}
             </Navbar>
         </div>
@@ -75,7 +72,13 @@ function UserNavigation({ supabase, email, displayName, userType }: UserNavigati
                 arrowIcon={false}
                 inline
                 label={
-                    <Avatar alt="User settings" img="https://scontent.fosu2-2.fna.fbcdn.net/v/t39.30808-6/353822101_6893632817318069_1083019472348269985_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_ohc=fDmmCkJfXpsAX89nOSk&_nc_ht=scontent.fosu2-2.fna&oh=00_AfBUViB7K6APFGmbGOnaHtE-hkyS905Fmc9XeM8Ail6Rkg&oe=654C6507" rounded />
+                    <Avatar
+                        theme={FlowbiteTheme.AVATAR}
+                        alt="Profile picute" 
+                        img="/profile.png" 
+                        size={'md'}
+                        rounded 
+                    />
                 }>
                 {(displayName && email) && (
                     <Dropdown.Header>
@@ -84,6 +87,7 @@ function UserNavigation({ supabase, email, displayName, userType }: UserNavigati
                     </Dropdown.Header>
                 )}
                 <Dropdown.Item onClick={() => router.push(dashboardRoute)}>Dashboard</Dropdown.Item>
+                <Dropdown.Item onClick={() => router.push('/profile')}>Profile</Dropdown.Item>
                 <Dropdown.Item>Settings</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={async () => {
@@ -99,9 +103,9 @@ function UserNavigation({ supabase, email, displayName, userType }: UserNavigati
 
 function NoUserNavigation() {
     return (
-        <>
+        <div className="flex" style={{ height: 40 }}>
             <Link href="/login" className="py-2 px-3 hover:bg-sky-700 dark:text-white">login</Link>
             <Link href="/signup" className="py-2 px-3 hover:bg-sky-700 dark:text-white">sign up</Link>
-        </>
+        </div>
     )
 }

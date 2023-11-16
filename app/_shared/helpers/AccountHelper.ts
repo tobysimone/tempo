@@ -1,4 +1,4 @@
-import { SupabaseClient, User } from "@supabase/supabase-js";
+import { Session, SupabaseClient, User } from "@supabase/supabase-js";
 import { UserConstants, UserType } from "../constants/user-constants";
 
 export async function getArtistIdFromUser(supabase: SupabaseClient) {
