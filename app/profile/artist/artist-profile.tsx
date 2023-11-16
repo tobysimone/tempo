@@ -1,5 +1,6 @@
 'use client';
 
+import { FlowbiteTheme } from '@/app/_shared/theme/flowbite-theme';
 import './styles.css';
 
 import { Sidebar } from 'flowbite-react';
@@ -7,7 +8,7 @@ import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser, Hi
 
 export default function ArtistProfile() {
   return (
-    <Sidebar aria-label="Default sidebar example" className="h-screen border-r border-gray-300 dark:border-transparent" id="artist-profile-sidebar">
+    <Sidebar id="artist-profile-sidebar" theme={FlowbiteTheme.SIDEBAR}>
       <Sidebar.Items>
         <Sidebar.ItemGroup>
           <Sidebar.Item href="#" icon={HiChartPie}>
