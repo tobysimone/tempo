@@ -10,6 +10,7 @@ import { SupabaseClient, createClientComponentClient } from "@supabase/auth-help
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import React from 'react';
 import { useEffect, useState } from "react";
 
 interface UserNavigationProps {
@@ -23,7 +24,9 @@ export default function UserNavbar() {
     const supabase = createClientComponentClient();
     const userContext = userUserContext();
     const userType = getUserType(userContext.user);
-    
+
+    console.log(userContext);
+
     return (
         <div className="fixed z-20 w-full top-0 left-0" style={{ height: 60 }}>
             <Navbar rounded style={{ height: 60 }}>
@@ -33,16 +36,22 @@ export default function UserNavbar() {
                         Tempo
                     </span>
                 </Navbar.Brand>
-                { userContext?.user?.aud === 'authenticated' ? (
-                    <UserNavigation
-                        email={userContext?.user?.email}
-                        displayName={userContext?.displayName}
-                        userType={userType}
-                        supabase={supabase}
-                    />
-                ) : (
-                    <NoUserNavigation />
-                )}
+                <span className="user-nav-fade-in">
+                    { !userContext.pending && (
+                        <span>
+                            { userContext?.user ? (
+                                <UserNavigation
+                                    email={userContext?.user?.email}
+                                    displayName={userContext?.displayName}
+                                    userType={userType}
+                                    supabase={supabase}
+                                />
+                            ) : (
+                                <NoUserNavigation />
+                            )}
+                        </span>
+                    )}
+                </span>
             </Navbar>
         </div>
     )
@@ -53,7 +62,7 @@ function UserNavigation({ supabase, email, displayName, userType }: UserNavigati
     const router = useRouter();
 
     useEffect(() => {
-        switch(userType) {
+        switch (userType) {
             case UserType.ARTIST:
                 setDashboardRoute('/dashboard/artist');
                 break;
@@ -74,16 +83,16 @@ function UserNavigation({ supabase, email, displayName, userType }: UserNavigati
                 label={
                     <Avatar
                         theme={FlowbiteTheme.AVATAR}
-                        alt="Profile picute" 
-                        img="/profile.png" 
+                        alt="Profile picute"
+                        img="/profile.jpeg"
                         size={'md'}
-                        rounded 
+                        rounded
                     />
                 }>
                 {(displayName && email) && (
                     <Dropdown.Header>
-                        <span className="block text-sm">{ displayName }</span>
-                        <span className="block truncate text-sm font-medium">{ email }</span>
+                        <span className="block text-sm">{displayName}</span>
+                        <span className="block truncate text-sm font-medium">{email}</span>
                     </Dropdown.Header>
                 )}
                 <Dropdown.Item onClick={() => router.push(dashboardRoute)}>Dashboard</Dropdown.Item>
@@ -103,7 +112,7 @@ function UserNavigation({ supabase, email, displayName, userType }: UserNavigati
 
 function NoUserNavigation() {
     return (
-        <div className="flex" style={{ height: 40 }}>
+        <div className="flex">
             <Link href="/login" className="py-2 px-3 hover:bg-sky-700 dark:text-white">login</Link>
             <Link href="/signup" className="py-2 px-3 hover:bg-sky-700 dark:text-white">sign up</Link>
         </div>
