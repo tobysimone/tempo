@@ -5,6 +5,7 @@ import { Card } from 'flowbite-react';
 import React from 'react';
 import ErrorPage from '@/app/error/page';
 import { createServerSupabaseClient } from '@/app/_shared/helpers/ServerSupabaseClient';
+import { FlowbiteTheme } from '@/app/_shared/theme/flowbite-theme';
 
 async function getArtist(artistId: string) {
     const supabase = createServerSupabaseClient();
@@ -34,7 +35,8 @@ export default async function Page({ params }: { params: { artistName: string } 
             <Card 
                 className="container w-full"
                 imgSrc={preferences?.header}
-                style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}
+                style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0, borderTop: 0 }}
+                theme={FlowbiteTheme.CARD}
             >
                 <h1 className="text-3xl font-bold text-black dark:text-white">{artist?.name}</h1>
                 <p className="mt-5 text-black dark:text-white">{preferences?.description}</p>

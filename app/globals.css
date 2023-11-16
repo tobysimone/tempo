@@ -74,6 +74,10 @@
   color: white;
 }
 
+.animated-link {
+  color: hsl(var(--foreground));
+}
+
 .animated-link:hover {
   background-size: 0 3px, 100% 3px;
   cursor: pointer;

@@ -4,7 +4,7 @@ import { getFileExtension } from "@/app/_shared/helpers/FileHelper";
 import { FlowbiteTheme } from "@/app/_shared/theme/flowbite-theme";
 import Cropper from "@/components/cropper/Cropper";
 import { Button, Card, Modal } from "flowbite-react";
-import { use, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Iframe from "react-iframe";
 import { useFilePicker } from "use-file-picker";
@@ -73,7 +73,7 @@ export default function SetupArtistHomepage() {
 
     return (
         <>
-            <Card className="mt-5 w-full lg:w-4/5 xl:w-4/5 2xl:w-3/5 flex self-center px-4 mx-5 container">
+            <Card className="mt-5 w-full xl:w-4/5 2xl:w-3/5 flex self-center px-4 mx-5 container" theme={FlowbiteTheme.CARD}>
                 <div className="flex flex-row items-center">
                     <h1 className="text-3xl font-bold text-black dark:text-white">Homepage Setup</h1>
                     <Button className='ml-auto' onClick={savePreferences} disabled={!formChanged}>

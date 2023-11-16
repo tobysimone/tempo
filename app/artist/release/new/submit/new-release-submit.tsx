@@ -1,6 +1,7 @@
 import { Button, Card } from "flowbite-react";
 import Link from "next/link";
 import { NewReleaseTrack } from "../tracks/model/new-release-track";
+import { FlowbiteTheme } from "@/app/_shared/theme/flowbite-theme";
 
 export interface NewReleaseSubmitProps {
     releaseTitle: string;
@@ -57,7 +58,7 @@ export default function NewReleaseSubmit(props: NewReleaseSubmitProps) {
                 Tracks
             </p>
             {tracks.map(track => (
-                <Card>
+                <Card theme={FlowbiteTheme.CARD}>
                     <p className="mt-1 text-lg font-normal text-black dark:text-white">
                         Title: {track.title}
                     </p>

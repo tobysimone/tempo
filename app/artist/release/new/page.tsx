@@ -12,6 +12,7 @@ import NewReleaseTrackCard from './tracks/components/new-release-track-card';
 import NewReleaseSubmit from './submit/new-release-submit';
 import { CreateReleaseRequest } from '../../../api/artist/release/route';
 import { useRouter } from 'next/navigation';
+import { FlowbiteTheme } from '@/app/_shared/theme/flowbite-theme';
 
 export default function NewRelease() {
     const router = useRouter();
@@ -171,7 +172,7 @@ export default function NewRelease() {
 
     return (
         <>
-            <Card className="mt-5 w-full lg:w-4/5 xl:w-4/5 2xl:w-3/5 flex self-center px-4 mx-5 container">
+            <Card className="mt-5 w-full lg:w-4/5 xl:w-4/5 2xl:w-3/5 flex self-center px-4 mx-5 container" theme={FlowbiteTheme.CARD}>
                 <h1 className="text-3xl font-bold text-black dark:text-white">Create New Release</h1>
                 <h2 className="text-2xl text-black dark:text-white">{(currentFlowPage.charAt(0).toUpperCase() + currentFlowPage.slice(1))}</h2>
                 <hr />

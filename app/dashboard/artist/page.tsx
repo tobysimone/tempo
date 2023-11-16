@@ -1,5 +1,6 @@
 'use client'
 
+import { FlowbiteTheme } from "@/app/_shared/theme/flowbite-theme";
 import { Button, Card } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { HiPlusCircle } from 'react-icons/hi';
@@ -19,7 +20,7 @@ export default function ArtistDashboard() {
 
 function ArtistHomepageCard({ router }: any) {
     return (
-        <Card className="mt-5 mx-2 w-full lg:w-1/2 xl:w-1/3">
+        <Card className="mt-5 mx-2 w-full lg:w-1/2 xl:w-1/3" theme={FlowbiteTheme.CARD}>
             <span className="text-2xl font-bold text-black dark:text-white">Homepage</span>
             <h2 className="font-light text-black dark:text-white">Homepage has not been setup yet.</h2>
             <Button onClick={() => router.push('/artist/homepage/setup')}>
@@ -34,7 +35,7 @@ function ArtistHomepageCard({ router }: any) {
 
 function ReleasesCard({ router }: any) {
     return (
-        <Card className="mt-5 mx-2 w-full lg:w-1/2 xl:w-1/3">
+        <Card className="mt-5 mx-2 w-full lg:w-1/2 xl:w-1/3" theme={FlowbiteTheme.CARD}>
                 <span className="text-2xl font-bold text-black dark:text-white">Releases</span>
                 <h2 className="font-light text-black dark:text-white">No releases.</h2>
                 <Button onClick={() => router.push('/artist/release/new')}>

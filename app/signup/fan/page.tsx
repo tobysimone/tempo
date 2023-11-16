@@ -1,6 +1,5 @@
-import Link from 'next/link';
 import SignUpMessage from '../_components/SignUpMessage';
-import { Button, Card } from 'flowbite-react';
+import { Button } from 'flowbite-react';
 
 export default function FanSignUp() {
     return (
