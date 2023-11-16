@@ -177,7 +177,7 @@ export class FlowbiteTheme {
 
   public static readonly SIDEBAR: FlowbiteSidebarTheme = {
     "root": {
-      "base": "h-screen border-r border-gray-200 dark:border-gray-700",
+      "base": "h-screen fixed border-r border-gray-200 dark:border-gray-700",
       "collapsed": {
         "on": "w-16",
         "off": "w-64"
