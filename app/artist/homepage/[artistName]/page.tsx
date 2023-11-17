@@ -31,7 +31,7 @@ export default async function Page({ params }: { params: { artistName: string } 
     const artist = await getArtist(preferences?.artistId);
 
     return (
-        <div className="self-center">
+        <div className="page-container">
             <Card 
                 className="container w-full"
                 imgSrc={preferences?.header}

@@ -3,15 +3,14 @@ import { Button } from 'flowbite-react';
 
 export default function FanSignUp() {
     return (
-        <div className="mt-5 flex flex-col w-full sm:max-w-xl self-center gap-2 px-8">
+        <div className="mt-5 flex page-container mx-auto sm:max-w-md gap-2 p-8">
+            <h1 className="text-2xl font-bold text-black dark:text-white">Fan Sign Up</h1>
             <form
-                className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
+                className="mt-5 flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
                 action="/auth/sign-up/fan"
                 method="post"
             >
-                <h1 className="text-2xl font-bold text-black dark:text-white">Fan Sign Up</h1>
-
-                <label className="text-md mt-5" htmlFor="email">
+                <label className="text-md" htmlFor="email">
                     Email
                 </label>
                 <input

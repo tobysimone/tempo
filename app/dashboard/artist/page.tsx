@@ -1,18 +1,23 @@
 'use client'
 
+import './styles.css';
+
 import { FlowbiteTheme } from "@/app/_shared/theme/flowbite-theme";
 import { Button, Card } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { HiPlusCircle } from 'react-icons/hi';
+import ArtistDashboardSidebar from "./ArtistDashboardSidebar";
 
 export default function ArtistDashboard() {
     const router = useRouter();
     return (
-        <div className="mt-5 container mx-auto px-4">
-            <h1 className="text-3xl font-bold text-black dark:text-white">Artist Dashboard</h1>
-            <div className="flex flex-col lg:flex-row">
-                <ReleasesCard router={router} />
-                <ArtistHomepageCard router={router} />
+        <div className="page-container !flex-row !items-stretch">
+            <ArtistDashboardSidebar />
+            <div className="container-fluid mt-5 px-4 w-full" style={{ marginLeft: 255 }}>
+                <div className="flex flex-row lg:flex-row">
+                    <ReleasesCard router={router} />
+                    <ArtistHomepageCard router={router} />
+                </div>
             </div>
         </div>
     )

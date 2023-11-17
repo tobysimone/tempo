@@ -177,7 +177,7 @@ export class FlowbiteTheme {
 
   public static readonly SIDEBAR: FlowbiteSidebarTheme = {
     "root": {
-      "base": "h-screen fixed border-r border-gray-200 dark:border-gray-700",
+      "base": "h-screen border-r border-gray-200 dark:border-gray-700",
       "collapsed": {
         "on": "w-16",
         "off": "w-64"
@@ -245,7 +245,7 @@ export class FlowbiteTheme {
       "base": "mt-4 space-y-2 border-t border-gray-200 pt-4 first:mt-0 first:border-t-0 first:pt-0 dark:border-gray-700"
     },
     "logo": {
-      "base": "mb-5 flex items-center pl-2.5",
+      "base": "mb-5 flex items-center",
       "collapsed": {
         "on": "hidden",
         "off": "self-center whitespace-nowrap text-xl font-semibold dark:text-white"

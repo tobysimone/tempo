@@ -72,8 +72,8 @@ export default function SetupArtistHomepage() {
     }
 
     return (
-        <>
-            <Card className="mt-5 w-full xl:w-4/5 2xl:w-3/5 flex self-center px-4 mx-5 container" theme={FlowbiteTheme.CARD}>
+        <div className="page-container">
+            <Card className="flex mt-5 px-4 mx-5 w-full xl:w-4/5 2xl:w-3/5" theme={FlowbiteTheme.CARD}>
                 <div className="flex flex-row items-center">
                     <h1 className="text-3xl font-bold text-black dark:text-white">Homepage Setup</h1>
                     <Button className='ml-auto' onClick={savePreferences} disabled={!formChanged}>
@@ -164,7 +164,7 @@ export default function SetupArtistHomepage() {
                     />
                 )}
             </Card>
-        </>
+        </div>
     )
 }
 
