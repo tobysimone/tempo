@@ -11,7 +11,7 @@
     "autoprefixer": "10.4.15",
     "b64-to-blob": "^1.2.19",
     "flowbite": "^1.8.1",
-    "flowbite-react": "^0.7.0-beta.4",
+    "flowbite-react": "^0.7.0-beta.5",
     "next": "latest",
     "postcss": "8.4.31",
     "react": "18.2.0",

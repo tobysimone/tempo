@@ -1,6 +1,6 @@
-import { TableConstants } from "@/app/_shared/constants/table-constants";
-import { UserConstants } from "@/app/_shared/constants/user-constants";
-import { SupabaseClient, User, createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { getUserType } from "@/app/_shared/helpers/AccountHelper";
+import { SupabaseClient, createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { getDisplayName } from "next/dist/shared/lib/utils";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -26,64 +26,6 @@ async function handleGet(_: Request) {
         user: session.user,
         displayName: displayName
     }
-}
-
-function getDisplayName(supabase: SupabaseClient, userType: string, user: User) {
-    switch(userType) {
-        case UserConstants.USER_TYPE_FAN:
-            return getFanDisplayName(supabase, user);
-        case UserConstants.USER_TYPE_ARTIST:
-            return getArtistDisplayName(supabase, user);
-        default:
-            return null;
-    }
-}
-
-async function getFanDisplayName(supabase: SupabaseClient, user: User) {
-    let displayName;
-    const {
-        data,
-        error
-    } = await supabase.from(TableConstants.FAN)
-        .select('username')
-        .eq('user_id', user.id)
-        .single();
-    
-    if(error) {
-        console.error(`Could not get fan from userId: ${user.id}, error: ${error}`);
-    }
-    
-    if(data) {
-        displayName = data.username;
-    }
-
-    return displayName;
-}
-
-async function getArtistDisplayName(supabase: SupabaseClient, user: User) {
-    let displayName;
-    const {
-        data,
-        error
-    } = await supabase.from(TableConstants.ARTIST)
-        .select('name')
-        .eq('user_id', user.id)
-        .single();
-
-    if(error) {
-        console.error(`Could not get artist from userId: ${user.id}`);
-    }
-
-    if(data) {
-        displayName = data.name;
-    }
-
-    return displayName;
-}
-
-
-function getUserType(user: User): string {
-    return user.user_metadata['type'];
 }
 
 async function getSession(supabase: SupabaseClient) {
