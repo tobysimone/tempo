@@ -6,7 +6,7 @@ import { FlowbiteTheme } from "@/app/_shared/theme/flowbite-theme";
 import { Button, Card } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { HiPlusCircle } from 'react-icons/hi';
-import ArtistDashboardSidebar from "./ArtistDashboardSidebar";
+import ArtistDashboardSidebar from "./components/ArtistDashboardSidebar";
 
 export default function ArtistDashboard() {
     const router = useRouter();
@@ -14,10 +14,11 @@ export default function ArtistDashboard() {
         <div className="page-container !flex-row !items-stretch">
             <ArtistDashboardSidebar />
             <div className="container-fluid mt-5 px-4 w-full" style={{ marginLeft: 255 }}>
-                <div className="flex flex-row lg:flex-row">
+                <h1 className="text-4xl text-black dark:text-white font-bold">Overview</h1>
+                {/*<div className="flex flex-row lg:flex-row">
                     <ReleasesCard router={router} />
                     <ArtistHomepageCard router={router} />
-                </div>
+                </div>*/}
             </div>
         </div>
     )

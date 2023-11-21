@@ -19,23 +19,23 @@ export default function SetupArtistHomepage() {
     const [header, setHeader] = useState<string>('');
     const [headerFileExtension, setHeaderFileExtension] = useState<string>('');
 
-    const getPreferences = useCallback(async () => {
-        const response = await fetch('/api/artist/homepage/preferences');
+    const getSettings = useCallback(async () => {
+        const response = await fetch('/api/artist/homepage/settings');
         return await response.json();
     }, []);
 
-    const savePreferences = async () => {
-        const preferences = {
+    const saveSettings = async () => {
+        const settings = {
             subdomain: subdomain,
             description: description,
             header: header
         };
 
-        await fetch('/api/artist/homepage/preferences', {
+        await fetch('/api/artist/homepage/settings', {
             method: 'PUT',
             body: JSON.stringify({
-                preferences: {
-                    ...preferences   
+                settings: {
+                    ...settings   
                 },
                 headerFileExtension
             })
@@ -48,10 +48,10 @@ export default function SetupArtistHomepage() {
 
     useEffect(() => {
         (async () => {
-            const preferences = await getPreferences();
-            setSubdomain(preferences.subdomain);
-            setDescription(preferences.description);
-            setHeader(preferences.header);
+            const settings = await getSettings();
+            setSubdomain(settings.subdomain);
+            setDescription(settings.description);
+            setHeader(settings.header);
         })();
     }, []);
 
@@ -76,7 +76,7 @@ export default function SetupArtistHomepage() {
             <Card className="flex mt-5 px-4 mx-5 w-full xl:w-4/5 2xl:w-3/5" theme={FlowbiteTheme.CARD}>
                 <div className="flex flex-row items-center">
                     <h1 className="text-3xl font-bold text-black dark:text-white">Homepage Setup</h1>
-                    <Button className='ml-auto' onClick={savePreferences} disabled={!formChanged}>
+                    <Button className='ml-auto' onClick={saveSettings} disabled={!formChanged}>
                         <p className="text-md font-normal text-white">
                             Save
                         </p>
@@ -192,6 +192,10 @@ function ImageHeaderPicker({ onImagePicked }: { onImagePicked: (image: string, e
     });
 
     useEffect(() => {
+        if(errors) {
+            console.error(errors);
+        }
+
         if(!filesContent || filesContent.length == 0) {
             return;
         }

@@ -7,7 +7,6 @@ export default async function Dashboard() {
     const user = await getUser(supabase);
     const userType = getUserType(user);
     
-    console.log('user type: ' + userType);
     switch(userType) {
         case 'artist':
             return <ArtistDashboard />

@@ -1,6 +1,5 @@
-import { getUserType } from "@/app/_shared/helpers/AccountHelper";
+import { getUserDisplayName, getUserType } from "@/app/_shared/helpers/AccountHelper";
 import { SupabaseClient, createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
-import { getDisplayName } from "next/dist/shared/lib/utils";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -20,7 +19,7 @@ async function handleGet(_: Request) {
         throw new Error(`No session found`);
     }
     const userType = getUserType(session.user);
-    const displayName = await getDisplayName(supabase, userType, session.user);
+    const displayName = await getUserDisplayName(supabase, session.user);
 
     return {
         user: session.user,

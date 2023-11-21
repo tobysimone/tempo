@@ -1,6 +1,7 @@
 'use client'
 
 import 'react-image-crop/dist/ReactCrop.css';
+import './styles.css';
 
 import { Button } from "flowbite-react";
 import { Modal, ModalSizes } from "flowbite-react/lib/esm/components/Modal/Modal";
@@ -12,12 +13,13 @@ export interface CropperProps {
     show: boolean;
     header: string;
     image: string | undefined;
+    circularCrop?: boolean;
     onCropComplete: (croppedImage: string) => void;
     onClose: () => void;
     onError: (error: string) => void;
 }
 
-export default function Cropper({ size, show, header, image, onCropComplete, onClose, onError }: CropperProps) {
+export default function Cropper({ size, show, header, image, circularCrop, onCropComplete, onClose, onError }: CropperProps) {
     if(!image) {
         onError('Image cannot be null');
     }
@@ -71,16 +73,17 @@ export default function Cropper({ size, show, header, image, onCropComplete, onC
         <Modal show={show} onClose={onClose} size={size}>
             <Modal.Header>{ header }</Modal.Header>
             <Modal.Body>
-                <ReactCrop
-                    crop={crop}
-                    onChange={setCrop}
-                >
-                    <img
-                        src={image}
-                        style={{ width: '100%' }}
-                        ref={imageRef}
-                    />
-                </ReactCrop>
+                <div className="flex justify-center" style={{ paddingBottom: 24 }}>
+                    <ReactCrop
+                        crop={crop}
+                        onChange={setCrop}
+                    >
+                        <img
+                            src={image}
+                            ref={imageRef}
+                        />
+                    </ReactCrop>
+                </div>
                 <Modal.Footer>
                     <Button onClick={onDoneClicked}>Done</Button>
                     <Button onClick={onClose}>Cancel</Button>

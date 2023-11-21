@@ -4,7 +4,7 @@ import b64toBlob from "b64-to-blob";
 import { cookies } from "next/headers";
 import { v4 as uuidv4 } from 'uuid';
 
-export interface HomepagePreferences {
+export interface HomepageSettings {
     id: string;
     artistId: string;
     subdomain: string;
@@ -12,50 +12,50 @@ export interface HomepagePreferences {
     header: string;
 }
 
-export async function getHomepagePreferences({ artistId, subdomain }: any): Promise<HomepagePreferences | null> {
+export async function getHomepageSettings({ artistId, subdomain }: any): Promise<HomepageSettings | null> {
     const supabase = createRouteHandlerClient({ cookies });
 
     const eqField = artistId ? 'artist_id' : 'subdomain';
-    const { data: preferences, error } = await supabase
-        .from('artist_homepage_preferences')
+    const { data: settings, error } = await supabase
+        .from('artist_homepage_settings')
         .select('*')
         .eq(eqField, artistId || subdomain)
         .single();
     if(error) {
-        console.error(`Error while getting artist homepage preferences: ${JSON.stringify(error)}`);
+        console.error(`Error while getting artist homepage settings: ${JSON.stringify(error)}`);
         return null;
     }
 
-    preferences.header = getHeaderImage(preferences?.header_url)?.data?.publicUrl;
+    settings.header = getHeaderImage(settings?.header_url)?.data?.publicUrl;
 
     return {
-        id: preferences.idText,
-        artistId: preferences.artist_id,
-        subdomain: preferences.subdomain,
-        description: preferences.description,
-        header: preferences.header
+        id: settings.id,
+        artistId: settings.artist_id,
+        subdomain: settings.subdomain,
+        description: settings.description,
+        header: settings.header
     };
 }
 
-export async function saveHomepagePreferences(preferences: HomepagePreferences, artistId: string, headerFileExtension: string) {
+export async function saveHomepageSettings(settings: HomepageSettings, artistId: string, headerFileExtension: string) {
     const supabase = createRouteHandlerClient({ cookies });
-    const existingPreferences = await getHomepagePreferences({ artistId: artistId });
+    const existingSettings = await getHomepageSettings({ artistId: artistId });
 
-    const savedHeader = await saveHeaderImage(preferences.header, headerFileExtension);
+    const savedHeader = await saveHeaderImage(settings.header, headerFileExtension);
 
     const { data, error } = await supabase
-        .from('artist_homepage_preferences')
+        .from('artist_homepage_settings')
         .upsert({
-            id: existingPreferences?.id,
+            id: existingSettings?.id,
             artist_id: artistId,
-            subdomain: preferences.subdomain,
-            description: preferences.description,
+            subdomain: settings.subdomain,
+            description: settings.description,
             header_url: savedHeader?.path
         })
         .select('*')
         .single();
     if(error) {
-        throw new Error(`Error while saving artist homepage preferences: ${JSON.stringify(preferences)}, artistId: ${artistId}, error: ${JSON.stringify(error)} ${error.details} ${error.hint} ${error.message}`);
+        throw new Error(`Error while saving artist homepage settings: ${JSON.stringify(settings)}, artistId: ${artistId}, error: ${JSON.stringify(error)} ${error.details} ${error.hint} ${error.message}`);
     }
 
     return data;

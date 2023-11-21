@@ -1,11 +1,10 @@
-import { getHomepagePreferences } from '@/app/api/artist/homepage/preferences/homepage-preferences-service';
+import { getHomepageSettings } from '@/app/_shared/service/homepage/homepage-settings.service';
 import './styles.css';
 
-import { Card } from 'flowbite-react';
-import React from 'react';
-import ErrorPage from '@/app/error/page';
 import { createServerSupabaseClient } from '@/app/_shared/helpers/ServerSupabaseClient';
 import { FlowbiteTheme } from '@/app/_shared/theme/flowbite-theme';
+import ErrorPage from '@/app/error/page';
+import { Card } from 'flowbite-react';
 
 async function getArtist(artistId: string) {
     const supabase = createServerSupabaseClient();
@@ -23,23 +22,23 @@ async function getArtist(artistId: string) {
 }
 
 export default async function Page({ params }: { params: { artistName: string } }) {
-    const preferences = await getHomepagePreferences({ subdomain: params.artistName });
-    if(!preferences) {
+    const settings = await getHomepageSettings({ subdomain: params.artistName });
+    if(!settings) {
         return <ErrorPage />
     }
 
-    const artist = await getArtist(preferences?.artistId);
+    const artist = await getArtist(settings?.artistId);
 
     return (
         <div className="page-container">
             <Card 
                 className="container w-full"
-                imgSrc={preferences?.header}
+                imgSrc={settings?.header}
                 style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0, borderTop: 0 }}
                 theme={FlowbiteTheme.CARD}
             >
                 <h1 className="text-3xl font-bold text-black dark:text-white">{artist?.name}</h1>
-                <p className="mt-5 text-black dark:text-white">{preferences?.description}</p>
+                <p className="mt-5 text-black dark:text-white">{settings?.description}</p>
             </Card>
         </div>
     );
