@@ -1,12 +1,14 @@
 import { Avatar, Dropdown, DropdownDivider, DropdownHeader, DropdownItem, Navbar, NavbarBrand } from "flowbite-react";
-import { getUserDisplayName, isUserAuthenticated } from "../../helpers/AccountHelper";
-import { FlowbiteTheme } from "../../theme/flowbite-theme";
 import Link from "next/link";
+import { getUserDisplayName, isUserAuthenticated } from "../../helpers/AccountHelper";
 import { createServerSupabaseClient } from "../../helpers/ServerSupabaseClient";
+import { getProfileSettings } from "../../service/profile/profile-settings.service";
+import { FlowbiteTheme } from "../../theme/flowbite-theme";
 
-export default async function TestNavbar({ user }: any) {
+export default async function UserNavbar({ user }: any) {
     const supabase = createServerSupabaseClient();
     const displayName = getUserDisplayName(supabase, user);
+    const profileSettings = await getProfileSettings(user?.id);
 
     return (
         <div className="fixed z-20 w-full top-0 left-0" style={{ height: 60 }}>
@@ -22,6 +24,7 @@ export default async function TestNavbar({ user }: any) {
                         <UserNavigation
                             email={user?.email}
                             displayName={displayName}
+                            profilePicture={profileSettings?.profilePicture}
                         />
                     ) : (
                         <NoUserNavigation />
@@ -32,7 +35,7 @@ export default async function TestNavbar({ user }: any) {
     )
 }
 
-function UserNavigation({ email, displayName }: any) {
+function UserNavigation({ email, displayName, profilePicture }: any) {
     return (
         <div className="flex md:order-2 mr-3">
             <Dropdown
@@ -42,7 +45,7 @@ function UserNavigation({ email, displayName }: any) {
                     <Avatar
                         theme={FlowbiteTheme.AVATAR}
                         alt="Profile picute"
-                        img="/profile.jpeg"
+                        img={profilePicture}
                         size={'md'}
                         rounded
                     />

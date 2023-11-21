@@ -34,7 +34,5 @@ async function handleGet(_: Request) {
         throw new Error(`User is not logged in, cannot get profile settings`);
     }
 
-    console.log(user?.id);
-
     return await getProfileSettings(user?.id);
 }

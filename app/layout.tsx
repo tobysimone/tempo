@@ -1,10 +1,10 @@
-import './globals.css'
+import './globals.css';
 
 import Footer from '@/app/_shared/components/footer/Footer';
 import NotificationManager from '@/components/notification/NotificationManager';
-import TestNavbar from './_shared/components/navbar/UserNavbar';
-import { createServerSupabaseClient } from './_shared/helpers/ServerSupabaseClient';
+import UserNavbar from './_shared/components/navbar/UserNavbar';
 import { getUser } from './_shared/helpers/AccountHelper';
+import { createServerSupabaseClient } from './_shared/helpers/ServerSupabaseClient';
 
 export const metadata = {
   title: 'Tempo',
@@ -20,7 +20,7 @@ export default async function RootLayout({ children }: any) {
       <body className="bg-background">
         <NotificationManager />
         <main className="min-h-screen">
-          <TestNavbar />
+          <UserNavbar user={user} />
           {children}
         </main>
         <Footer />

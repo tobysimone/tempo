@@ -92,7 +92,6 @@ async function saveProfilePicture(user: User, profilePicture: string, profilePic
 }
 
 function getProfilePicture(profilePictureUrl: string) {
-    console.log(profilePictureUrl)
     const supabase = createRouteHandlerClient({ cookies });
     return supabase.storage
         .from('profile_picture')

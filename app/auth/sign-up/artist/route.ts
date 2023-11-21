@@ -15,19 +15,19 @@ export async function POST(request: Request) {
 
     const { data: { user }, error: createUserError } = await createUser(supabase, email, password, `${requestUrl.origin}/auth/callback`);
     if (createUserError) {
-        console.log(`Error while creating user account for artist sign up: ${JSON.stringify(createUserError)}`);
+        console.error(`Error while creating user account for artist sign up: ${JSON.stringify(createUserError)}`);
         return redirectToSignUpWithMessage(requestUrl.origin, 301, true, SignUpMessage.ERROR_WHILE_CREATING_ARTIST_ACCOUNT);
     }
 
     const userId = user?.id;
     if(!userId) {
-        console.log(`Error while creating user account for artist sign up: userId is null`);
+        console.error(`Error while creating user account for artist sign up: userId is null`);
         return redirectToSignUpWithMessage(requestUrl.origin, 301, true, SignUpMessage.ERROR_WHILE_CREATING_ARTIST_ACCOUNT);
     }
 
     const { error: createArtistError } = await createArtist(supabase, userId, artistName);
     if(createArtistError) {
-        console.log(`Error while completing artist sign up: ${JSON.stringify(createArtistError)}`);
+        console.error(`Error while completing artist sign up: ${JSON.stringify(createArtistError)}`);
         return redirectToSignUpWithMessage(requestUrl.origin, 301, true, SignUpMessage.ERROR_WHILE_CREATING_ARTIST_ACCOUNT);
     }
 

@@ -15,19 +15,19 @@ export async function POST(request: Request) {
 
     const { data: { user }, error: createUserError } = await createUser(supabase, email, password, `${requestUrl.origin}/auth/callback`);
     if (createUserError) {
-        console.log(`Error while creating user account for fan sign up: ${JSON.stringify(createUserError)}`);
+        console.error(`Error while creating user account for fan sign up: ${JSON.stringify(createUserError)}`);
         return redirectToSignUpWithMessage(requestUrl.origin, 301, true, SignUpMessage.ERROR_WHILE_CREATING_ARTIST_ACCOUNT);
     }
 
     const userId = user?.id;
     if(!userId) {
-      console.log(`Error while creating user account for fan sign up: userId is null`);
+      console.error(`Error while creating user account for fan sign up: userId is null`);
       return redirectToSignUpWithMessage(requestUrl.origin, 301, true, SignUpMessage.ERROR_WHILE_CREATING_ARTIST_ACCOUNT);
     }
 
     const { error: createFanError } = await createFan(supabase, userId, username);
     if(createFanError) {
-      console.log(`Error while completing fan sign up: ${JSON.stringify(createFanError)}`);
+      console.error(`Error while completing fan sign up: ${JSON.stringify(createFanError)}`);
       return redirectToSignUpWithMessage(requestUrl.origin, 301, true, SignUpMessage.ERROR_WHILE_CREATING_ARTIST_ACCOUNT);
     }
     
