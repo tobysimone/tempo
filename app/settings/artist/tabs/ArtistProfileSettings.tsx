@@ -5,6 +5,7 @@ import { getFileExtension } from "@/app/_shared/helpers/FileHelper";
 import { ArtistSettings } from "@/app/_shared/service/artist/ArtistSettings.model";
 import { ProfileSettings } from "@/app/_shared/service/profile/ProfileSettings.model";
 import Cropper from "@/components/cropper/Cropper";
+import LoadingPage from "@/components/loading/loading";
 import { User, createClientComponentClient, createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { Avatar, Button } from "flowbite-react";
 import { cookies } from "next/headers";
@@ -51,6 +52,10 @@ export default function ArtistProfileSettingsPage() {
             await refresh();
         })();
     }, []);
+
+    if(!artistSettings || !profileSettings) {
+        return <LoadingPage />
+    }
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2">
