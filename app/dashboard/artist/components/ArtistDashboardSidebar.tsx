@@ -13,7 +13,7 @@ export default function ArtistDashboardSidebar() {
             <hr />
             <Sidebar.Items className="mt-3">
                 <Sidebar.ItemGroup>
-                    <Sidebar.Item href="#" icon={FaRecordVinyl}>
+                    <Sidebar.Item href="/artist/release" icon={FaRecordVinyl}>
                         Releases
                     </Sidebar.Item>
                     <Sidebar.Item href="/artist/homepage/setup" icon={CgWebsite}>

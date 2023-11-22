@@ -17,7 +17,7 @@ export async function GET(request: Request) {
     try {
         return NextResponse.json(await handleGet(request), { status: 200 });
     } catch (e) {
-        console.error(`Error while saving profile: ${e}`);
+        console.error(`Error while getting profile: ${e}`);
         return NextResponse.json({}, { status: 500 });
     }
 }

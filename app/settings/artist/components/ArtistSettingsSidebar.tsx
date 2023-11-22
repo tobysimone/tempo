@@ -14,7 +14,7 @@ export default function ArtistSettingsSidebar({ setActiveTab }: { setActiveTab: 
             <hr />
             <Sidebar.Items className="mt-3">
                 <Sidebar.ItemGroup>
-                    <Sidebar.Item icon={MdAccountCircle} onClick={() => setActiveTab(0)}>
+                    <Sidebar.Item icon={MdAccountCircle} onClick={() => setActiveTab(0)} style={{ cursor: 'pointer' }}>
                         Profile
                     </Sidebar.Item>
                     <Sidebar.Item href="/auth/sign-out" icon={FaSignOutAlt}>

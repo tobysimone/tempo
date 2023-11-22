@@ -3,14 +3,7 @@ import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import b64toBlob from "b64-to-blob";
 import { cookies } from "next/headers";
 import { v4 as uuidv4 } from 'uuid';
-
-export interface HomepageSettings {
-    id: string;
-    artistId: string;
-    subdomain: string;
-    description: string;
-    header: string;
-}
+import { HomepageSettings } from "./HomepageSettings.model";
 
 export async function getHomepageSettings({ artistId, subdomain }: any): Promise<HomepageSettings | null> {
     const supabase = createRouteHandlerClient({ cookies });

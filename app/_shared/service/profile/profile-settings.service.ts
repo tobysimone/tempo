@@ -4,16 +4,7 @@ import { cookies } from "next/headers";
 import { v4 as uuidv4 } from 'uuid';
 import { getUser } from "../../helpers/AccountHelper";
 import { stripBase64ImageHeader } from "../../helpers/FileHelper";
-
-export interface ProfileSettings {
-    id: string;
-    profilePicture: string;
-}
-
-export interface ProfileSettingsDto {
-    profileSettings: ProfileSettings;
-    profilePictureFileExtension: string;
-}
+import { ProfileSettings, ProfileSettingsDto } from "./ProfileSettings.model";
 
 export async function getProfileSettings(userId: string): Promise<ProfileSettings | null> {
     const supabase = createRouteHandlerClient({ cookies });

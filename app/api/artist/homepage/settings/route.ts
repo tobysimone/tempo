@@ -2,7 +2,8 @@ import { getArtistIdFromUser } from "@/app/_shared/helpers/AccountHelper";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { HomepageSettings, getHomepageSettings, saveHomepageSettings } from "../../../../_shared/service/homepage/homepage-settings.service";
+import { getHomepageSettings, saveHomepageSettings } from "../../../../_shared/service/homepage/homepage-settings.service";
+import { HomepageSettings } from "@/app/_shared/service/homepage/HomepageSettings.model";
 
 export async function GET(request: Request) {
     return handleGet(request);

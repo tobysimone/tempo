@@ -10,6 +10,7 @@ module.exports = {
         raisedBackground: 'var(--raised-background)',
         background: 'var(--background)',
         foreground: 'hsl(var(--foreground))',
+        label: 'var(--label)',
         btn: {
           background: 'hsl(var(--btn-background))',
           'background-hover': 'hsl(var(--btn-background-hover))',
